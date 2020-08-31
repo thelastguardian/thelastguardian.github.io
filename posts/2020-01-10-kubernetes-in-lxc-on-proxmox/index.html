@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" data-theme=""><head>
+    <title> thelastguardian | Kubernetes in LXC on Proxmox </title>
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.71.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="Site Reliability Engineer. Gamer. PC Enthusiast. Datahoarder.">
+    
+    <link rel="stylesheet" href="http://thelastguardian.me/css/style.min.5be3a155aa89a24586c761b1b5538c4040e3735ee32ac12a708dc1696c0982f5.css" integrity="sha256-W&#43;OhVaqJokWGx2GxtVOMQEDjc17jKsEqcI3BaWwJgvU=" crossorigin="anonymous" type="text/css"><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+    <link rel="shortcut icon" href="http://thelastguardian.me/favicons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="http://thelastguardian.me/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://thelastguardian.me/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://thelastguardian.me/favicons/favicon-16x16.png">
+    <link rel="canonical" href="http://thelastguardian.me/posts/2020-01-10-kubernetes-in-lxc-on-proxmox/">
+    
+    
+    <script type="text/javascript" src="http://thelastguardian.me/js/anatole-header.min.7e2fc0724240b28c6e214687e73a4a6eb6c196bbace546b9dc86e94cca120b5c.js" integrity="sha256-fi/AckJAsoxuIUaH5zpKbrbBlrus5Ua53IbpTMoSC1w=" crossorigin="anonymous"></script>
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kubernetes in LXC on Proxmox"/>
+<meta name="twitter:description" content="Kubernetes in LXC containers on Proxmox Virtualization Environment"/>
+
+</head><body><div class="sidebar animated fadeInDown">
+    <div class="logo-title">
+      <div class="title">
+        <img src="http://thelastguardian.me/images/tom-cat-reading-newspaper.jpeg" alt="profile picture">
+        <h3 title=""><a href="/">thelastguardian.me</a></h3>
+        <div class="description">
+          <p>Site Reliability Engineer. Gamer. PC Enthusiast. Datahoarder.</p>
+        </div>
+      </div>
+    </div>
+    <ul class="social-links">
+        
+        <li>
+        <a href="https://www.linkedin.com/in/vinaydargar/" rel="me" aria-label="Linkedin">
+          <i class="fa fa-2x fa-linkedin" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="https://github.com/thelastguardian/" rel="me" aria-label="GitHub">
+          <i class="fa fa-2x fa-github" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="mailto:me@thelastguardian.me" rel="me" aria-label="e-mail">
+          <i class="fa fa-2x fa-envelope" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+    </ul>
+    <div class="footer">
+        <div class="by_farbox">&copy; thelastguardian 2020 </div>
+      </div>
+    </div>
+</div><div class="main">
+            <div class="page-top animated fadeInDown">
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    <ul class="nav" id="navMenu">
+        
+        
+        
+        <li><a  href="/"  title="">Home</a></li>
+        
+        
+        <li><a  href="/about/"  title="">About</a></li>
+        
+        
+        <li><a  href="/posts/"  title="">Posts</a></li>
+        
+        
+        <li><a  href="/tags/"  title="">Tags</a></li>
+        
+        
+        <li class="theme-switch-item">
+        <a class="theme-switch" title="Switch Theme">
+            <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+        </a>
+        </li>
+    </ul>
+</div>
+
+            <div class="autopagerize_page_element">
+                <div class="content">
+<div class="post animated fadeInDown">
+    <div class="post-content">
+
+      <div class="post-title">
+        <h3>Kubernetes in LXC on Proxmox
+        </h3>
+        
+        </div>
+
+    <h1 id="backstory">Backstory</h1>
+<p>I&rsquo;ve been working with Kubernetes for the past few months at work, to run our webserving and internal applications. We use AWS&rsquo;s Elastic Kubernetes Service (EKS), their managed Kubernetes control plane offering. It&rsquo;s easy to set up and reliable enough to let folks like me new to Kubernetes run production workloads without too much trouble. We don&rsquo;t to worry about managing critical control-plane services, we just have to supply our own worker nodes and our application stack.</p>
+<p>But to really get stuff done on EKS, a deeper understanding of the Kubernetes core is necessary. There are quite a few rough edges and when something goes wrong or you feel like you&rsquo;re missing an obvious feature, you need to know how stuff works under the hood. For the past few months my team has been on that, but I wanted to set up and run my own kubernetes cluster at home to learn more than what I could experiement with on AWS EKS.</p>
+<h1 id="kubernetes-single-node-microk8s">Kubernetes single-node MicroK8s</h1>
+<p>Kubernetes can be run on bare-metal on-premises equipment, like a homelab. There are some differences in how loadbalancers work (each cloud platform has its own version of LoadBalancer, but on your own servers, you have to set those up yourself), and how traffic flows into your cluster, and that presents a lot of opportunites to learn more about everything. To get started, I spun up a normal linux virtual machine with Ubuntu 18.04 and installed microk8s on it. Following a couple of guides on setting up the basics and adding some of my deployments and everything went as expected. I ran this setup for a couple of months, serving this website off of it, along with some apps like CodiMD, FileBrowser, Trilium Notes. An automatic Let&rsquo;s Encrypt setup kept everything serving over https, and a in-cluster docker registry backed by some Ceph storage from my Proxmox cluster persisted custom docker images.</p>
+<h1 id="kubernetes-cluster-in-lxc-on-multi-node-proxmox">Kubernetes Cluster in LXC on multi-node Proxmox</h1>
+<p>This was fine for a basic Kubernetes setup, but what&rsquo;s the point of running that on a single virtual machine? I could have just run a few docker-compose deployments on a docker VM, which is really everyone&rsquo;s go-to choice for a single node dockerized set of applications. The real benefit of Kubernetes is multi-node application scheduling, and I had three systems in my homelab with power to spare on each. It was time to set up a real K8s cluster across the three nodes.</p>
+<p>Since I&rsquo;m running Proxmox on my homelab systems, I wanted to use LXC containers to run K8s, instead of full KVM virtual machines. They would be much more efficient, avoiding all hardware emulation and simply running the application processes inside namespaces on the host system and kernel. Less isolation, yes, but an acceptable tradeoff.</p>
+<p>Over the past year I&rsquo;ve run a docker-on-ubuntu setup in an LXC instead of a VM, and while setting that up a few hurdles had to be jumped over to get it working. Some of them were <a href="">this</a>, <a href="">this</a> and <a href="">this</a>. By now though, some of these are unnecessary, since the linux kernal and PVE have incorporated changes to make it easier. There are still some custom steps though, and I didn&rsquo;t see any guide online detailing them all in a single place, so here goes my guide.</p>
+<p>This is applicable to the current versions of PVE, Ubuntu and K8s:</p>
+<pre><code>PVE 6.1-3
+Ubuntu 18.04-1.1 LXC template
+Kubeadm v1.17
+K8s 1.17
+</code></pre><p>The node layout is simple for now - I want a separation between the control plane nodes and the worker nodes, just like in AWS EKS and other cloud K8s offerings. I also want a high availability cluster, so ideally I&rsquo;d run the control plane across atleast 3 nodes/containers with HA configured for <code>etcd</code> as well. Right now however I&rsquo;m starting off with a single-node control plane, which I&rsquo;ll keep on shared storage so I can migrate it across physical PVE nodes quickly if I need to. I want to be able to reasonably quickly and easily switch over to a proper HA control plane setup so I&rsquo;ll be keeping that in mind for some of the following steps.</p>
+<p>Also, since this will come up later - a choice of network has to be made for the cluster. Based on some light research, I&rsquo;ve decided to use <a href="">Calico</a>. With this there is a step in the cluster setup process which has a slight change - I need to specify the IP address pool from which pod IPs will be allocated.
+The default is 192.168.0.0/16 for &ldquo;&lt;50 nodes&rdquo; and 10.244.0.0/16 for &ldquo;more than 50 nodes&rdquo;, but I&rsquo;ll be using 10.244.0.0/16 since I may/do have network devices in the 192.168.0.0/16 range which I want to be able to reach from pods.</p>
+<p>I&rsquo;ll be using <code>kubeadm</code> to set up the cluster. I&rsquo;ll call my first control plane node <code>k8s-control-1</code>. Let&rsquo;s set it up:</p>
+<p>I&rsquo;ve downloaded the Ubuntu 18.04-1.1 LXC template from Proxmox&rsquo;s templates download GUI, to local storage.
+We need to customize a container configuration to make changes to allow K8s to run correctly, similar to the config for the docker LXC container:
+The container needs to be a priviledged container, so don&rsquo;t tick <code>Unpriviledged</code>
+The container&rsquo;s SWAP needs to be set to 0 (K8s really doesn&rsquo;t like SWAP for performance reasons, so we&rsquo;ll just provide enough physical RAM instead).</p>
+<p>Open up the container&rsquo;s PVE config file in <code>/etc/pve/lxc/</code> and add the following at the bottom:</p>
+<pre><code>lxc.apparmor.profile: unconfined
+lxc.cap.drop: 
+lxc.cgroup.devices.allow: a
+lxc.mount.auto: proc:rw sys:rw
+</code></pre><p>This blows away a lot of the security features of LXC, but I&rsquo;re doing this to avoid running a full KVM instance. Now, start up the container and go inside.</p>
+<p>To get started, refer to <a href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/">this guide</a> to set up the <code>docker</code> runtime.</p>
+<p>You&rsquo;ll see docker running successfully:</p>
+<pre><code>root@k8s-staticwan:~# sudo systemctl status docker
+● docker.service - Docker Application Container Engine
+  Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+  Active: active (running) since Sat 2020-03-28 20:33:09 UTC; 19min ago
+</code></pre><p>Then, follow the kubeadm installation process <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/">here</a>.</p>
+<p>Now that we have kubeadm and kubelet installed, we can check up on the status of the kubectl service before we proceed, with <code>systemctl status kubectl</code></p>
+<p>The crash loop of the kubelet is expected, since kubeadm hasn&rsquo;t set up a config file for it yet.</p>
+<h1 id="kubeadm-init">kubeadm init</h1>
+<p>Now comes the <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/">real stuff</a>. I want to be able to switch to a high-availability cluster control plane later, while I&rsquo;m starting with a single node right now. The docs have this to say:</p>
+<blockquote>
+<p>(Recommended) If you have plans to upgrade this single control-plane kubeadm cluster to high availability you should specify the &ndash;control-plane-endpoint to set the shared endpoint for all control-plane nodes. Such an endpoint can be either a DNS name or an IP address of a load-balancer.</p>
+</blockquote>
+<p>So I&rsquo;ll be setting a DNS entry in my pfSense DNS resolver/forwarder for
+<code>kcontrol.mydomain.com</code> to the current IP address of this control place container. When I add more control plane containers, I can add more A record values to that DNS entry.</p>
+<p>So, the <code>kubeadm init</code> command for me is:</p>
+<pre><code>kubeadm init --control-plane-endpoint=kcontrol.mydomain.com --pod-network-cidr=10.244.0.0/16
+</code></pre><p>Now, I run the <code>kubeadm init</code> command, and end up with</p>
+<pre><code>   W0105 21:06:32.007656    9528 validation.go:28] Cannot validate kube-proxy config - no validator is available
+   W0105 21:06:32.007691    9528 validation.go:28] Cannot validate kubelet config - no validator is available
+   [init] Using Kubernetes version: v1.17.0
+   [preflight] Running pre-flight checks
+   [preflight] The system verification failed. Printing the output from the verification:
+   KERNEL_VERSION: 5.3.10-1-pve-tlg
+   OS: Linux
+   CGROUPS_CPU: enabled
+   CGROUPS_CPUACCT: enabled
+   CGROUPS_CPUSET: enabled
+   CGROUPS_DEVICES: enabled
+   CGROUPS_FREEZER: enabled
+   CGROUPS_MEMORY: enabled
+   error execution phase preflight: [preflight] Some fatal errors occurred:
+      [WARNING SystemVerification]: failed to parse kernel config: unable to load kernel module: &quot;configs&quot;, output: &quot;modprobe: ERROR: ../libkmod/libkmod.c:586 kmod_search_moddep() could not open moddep file '/lib/modules/5.3.18-2-pve/modules.dep.bin'\nmodprobe: FATAL: Module configs not found in directory /lib/modules/5.3.18-2-pve\n&quot;, err: exit status 1
+   [preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+   To see the stack trace of this error execute with --v=5 or higher
+</code></pre><p>Even if you do mount the /lib/modules/<!-- raw HTML omitted --> folder from the host to the LXC guest with:</p>
+<pre><code>pct set xxx --mp0 /lib/modules/$(uname -r),mp=/lib/modules/$(uname -r),ro=1
+</code></pre><p>You&rsquo;ll still get:</p>
+<pre><code>	[ERROR SystemVerification]: failed to parse kernel config: unable to load kernel module: &quot;configs&quot;, output: &quot;modprobe: FATAL: Module configs not found in directory /lib/modules/5.3.10-1-pve\n&quot;, err: exit status 1
+</code></pre><p>I&rsquo;m running a custom compiled kernel on my PVE host, with a different version tag, and even if I wasn&rsquo;t, PVE doesn&rsquo;t come with the linux-image package for its kernels. There is likely a solution somewhere, involving copying the <a href="https://github.com/kubernetes/kubernetes/issues/41025">right kernel <code>.config</code></a> to the right place, but this preflight check <a href="https://github.com/kubernetes-sigs/kind/issues/61">can be ignored</a> as just a warning.</p>
+<p>Rerun <code>kubeadm init</code> with:</p>
+<pre><code>kubeadm init --control-plane-endpoint=kcontrol.mydomain.com --ignore-preflight-errors=SystemVerification --pod-network-cidr=10.244.0.0/16
+</code></pre><p>A disk-heavy portion of this, the downloading of images from Google&rsquo;s registry onto local rootdisk, took ridiculously long on the Ceph root disk (it took under a minute when I had tried this on a local SSD disk)</p>
+<p>Now it proceeds further, but then:</p>
+<pre><code>[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory &quot;/etc/kubernetes/manifests&quot;. This can take up to 4m0s
+[kubelet-check] Initial timeout of 40s passed.
+[kubelet-check] It seems like the kubelet isn't running or healthy.
+[kubelet-check] The HTTP call equal to 'curl -sSL http://localhost:10248/healthz' failed with error: Get http://localhost:10248/healthz: dial tcp [::1]:10248: connect: connection refused.
+[kubelet-check] It seems like the kubelet isn't running or healthy.
+[kubelet-check] The HTTP call equal to 'curl -sSL http://localhost:10248/healthz' failed with error: Get http://localhost:10248/healthz: dial tcp [::1]:10248: connect: connection refused.
+</code></pre><p>Checking the logs for the kubelet with <code>journalctl -xeu kubelet</code> shows:</p>
+<pre><code>Jan 05 21:20:46 k8s-control-1 kubelet[13376]: E0105 21:20:46.135602   13376 reflector.go:156] k8s.io/kubernetes/pkg/kubelet/config/apiserver.go:46: Failed to list *v1.Pod: Get https://kcontr
+Jan 05 21:20:46 k8s-control-1 kubelet[13376]: E0105 21:20:46.137016   13376 reflector.go:156] k8s.io/kubernetes/pkg/kubelet/kubelet.go:458: Failed to list *v1.Node: Get https://kcontrol.home
+Jan 05 21:20:46 k8s-control-1 kubelet[13376]: E0105 21:20:46.319643   13376 aws_credentials.go:77] while getting AWS credentials NoCredentialProviders: no valid providers in chain. Deprecate
+Jan 05 21:20:46 k8s-control-1 kubelet[13376]:         For verbose messaging see aws.Config.CredentialsChainVerboseErrors
+Jan 05 21:20:46 k8s-control-1 kubelet[13376]: I0105 21:20:46.320240   13376 kuberuntime_manager.go:211] Container runtime containerd initialized, version: 1.2.10, apiVersion: v1alpha2
+Jan 05 21:20:46 k8s-control-1 kubelet[13376]: I0105 21:20:46.320586   13376 server.go:1113] Started kubelet
+Jan 05 21:20:46 k8s-control-1 kubelet[13376]: F0105 21:20:46.321394   13376 kubelet.go:1413] failed to start OOM watcher open /dev/kmsg: no such file or directory
+Jan 05 21:20:46 k8s-control-1 systemd[1]: kubelet.service: Main process exited, code=exited, status=255/n/a
+Jan 05 21:20:46 k8s-control-1 systemd[1]: kubelet.service: Failed with result 'exit-code'.
+</code></pre><p>Don&rsquo;t be misled by the failed HTTPs requests - those are failing because the kubelet hasn&rsquo;t been able to start successfully yet. Why? Notice the last <code>F</code> Fatal error - <code>kubelet[13376]: F0105 21:20:46.321394   13376 kubelet.go:1413] failed to start OOM watcher open /dev/kmsg: no such file or directory</code></p>
+<p><a href="https://forum.proxmox.com/threads/kubernetes-sharing-of-dev-kmsg-with-the-container.61622/">Here</a> we see a helpful person noticing that <code>lxc.kmsg = 1</code> is a known config option, but PVE LXC doesn&rsquo;t work with it. I tried adding <code>lxc.kmsg: 1</code> to the PVE LXC config, inline with the other lxc configs I added previously, but on starting the container I get a:</p>
+<pre><code>Jan 06 02:52:58 fowlmanor lxc-start[1747057]: lxc-start: 124: confile.c: parse_line: 2811 Unknown configuration key &quot;lxc.kmsg&quot;
+Jan 06 02:52:58 fowlmanor lxc-start[1747057]: lxc-start: 124: parse.c: lxc_file_for_each_line_mmap: 142 Failed to parse config file &quot;/var/lib/lxc/124/config&quot; at line &quot;lxc.kmsg = 1&quot;
+Jan 06 02:52:58 fowlmanor lxc-start[1747057]: Failed to load config for 124
+Jan 06 02:52:58 fowlmanor lxc-start[1747057]: lxc-start: 124: tools/lxc_start.c: main: 263 Failed to create lxc_container
+Jan 06 02:52:58 fowlmanor systemd[1]: pve-container@124.service: Control process exited, code=exited, status=1/FAILURE
+</code></pre><p>So, I had to go with the workaround - symlink /dev/console to /dev/kmsg. Thanks, helpful guy on the PVE forums (this workaround has been mentioned online elsewhere too). You can run <code>ln -s /dev/console /dev/kmsg</code> to do so, but this doesn&rsquo;t survive a reboot, so do:</p>
+<pre><code>echo 'L /dev/kmsg - - - - /dev/console' &gt; /etc/tmpfiles.d/kmsg.conf
+</code></pre><p>Reference: step from <a href="https://github.com/corneliusweig/kubernetes-lxd">kubernetes-lxd</a>. (This relies on systemd, which is in Ubuntu based containers)</p>
+<p>Now, <code>systemctl restart kubelet</code>. The kubectl successfully spins up now, but the <code>kubeadm init</code> process was incomplete. Rerunning it fails since the kubelet is partially configured and has bound to its ports, so I cleared the kubeadm init setup with <code>kubeadm reset</code>, then reran the <code>kubeadm init</code> command. This should probably be one of the preflight checks, but for now, remember to check for /dev/kmsg and set it up if it isn&rsquo;t present, before doing a <code>kubeadm init</code>.</p>
+<p>This time, all goes well, and I have a running kubelet. Let&rsquo;s do a <code>kubectl get nodes</code>:</p>
+<pre><code>NAME                STATUS   ROLES    AGE   VERSION
+k8s-control-1       Ready    master   2d   v1.17.0
+</code></pre><hr>
+<p>I did run into some issues doing the steps above, which I&rsquo;ve skipped for brevity - errors involving the kubelet not becoming healthy in time because of the slow backing disk of the LXC made me have to switch to a local disk and muck around with configs while the kubeadm join command was running.</p>
+<p>To set up subsequent nodes (a worker node LXC on each of my Proxmox hosts, and another control plane node LXC on a different physical host), I redid the above, but in the &ldquo;right&rdquo; order. with <code>kubeadm join</code> instead of <code>kubeadm init</code>. The join info for control plane nodes and worker nodes is printed as the <code>kubeadm init</code> finishes. The join process also needs the <code>--ignore-preflight-errors=SystemVerification</code> I used previously.</p>
+<pre><code>NAME                STATUS   ROLES    AGE   VERSION
+k8s-camphalfblood   Ready    &lt;none&gt;   15m   v1.17.2
+k8s-control-1       Ready    master   2d   v1.17.2
+k8s-fowlmanor       Ready    &lt;none&gt;   15m   v1.17.2
+</code></pre><p>Now that I have two control plane nodes, if even one goes down, consensus/node lease is lost since there is no longer a majority, and the whole control plane stops functioning. A 3rd control node is necessary to actually benefit from High Availability.</p>
+<h3 id="join-more-nodes-later">Join more nodes later:</h3>
+<h4 id="to-join-a-worker-node">To join a worker node:</h4>
+<p>The certs and join token created above are only valid for a short time - see <code>kubeadm token list</code> to see validity info. To recreate tokens and get the join info printed again, use:</p>
+<pre><code>kubeadm token create --print-join-command
+</code></pre><p>This creates a token to let worker nodes join.</p>
+<h4 id="to-join-a-control-plane-node">To join a control plane node:</h4>
+<p>Use <code>kubeadm</code> to upload the cluster&rsquo;s certs encrypted, into a kubernetes Secret named <code>kubeadm-certs</code> in the cluster&rsquo;s <code>kube-system</code> namespace, with:</p>
+<pre><code>kubeadm init phase upload-certs --upload-certs
+</code></pre><p>This prints a certificate key, to use for decryption of these certs later. Now create a join token and print the join command for a control plane node with:</p>
+<pre><code>kubeadm token create --print-join-command --certificate-key &lt;certkey&gt;
+</code></pre><p>This prints a similar join command to run on a new control plane node, but with <code>--control-plane</code> to direct kubeadm to join as a cluster, and the <code>--certificate-key</code> we provided.</p>
+<hr>
+<h4 id="everything-in-a-single-script">Everything in a single script:</h4>
+<p>If you&rsquo;re lazy like me, you don&rsquo;t want to be copy-pasting a few commands at a time from the documentation, across 10+ steps. To make all this faster, I put all the commands I actually ran, in a bash script:</p>
+<p><a href="../snippets/kubernetes-kubeadm-install.sh">kubernetes-kubeadm-install.sh</a></p>
+<p>Upgrading kubernetes with kubeadm is rather easy, but here&rsquo;s a snippet with commands for that too (not everything is to be run on all nodes):</p>
+<p><a href="../snippets/kubernetes-kubeadm-install.sh">kubernetes-kubeadm-upgrade.sh</a></p>
+<h2 id="notes">Notes:</h2>
+<p>To remove a control plane endpoint, don&rsquo;t just delete the LXC and do a <code>kubectl delete node node-name</code>. Go to the node and do a <code>kubeadm reset</code> - which should remove the etcd member on that node from the member list. Otherwise, that member remains in the etcd member list and will be unhealthy. I was unable to join a new control plane node in this situation since kubeadm checks etcd health and the old control plane node I had deleted abruptly was still in the etcd member list.</p>
+<p>To debug/fix etcd problems:</p>
+<p>Go to any etcd pod in kube-system namespace, do:</p>
+<blockquote>
+<p>(where the endpoint list is the IPs of the control plane nodes you want to operate against)</p>
+</blockquote>
+<pre><code>alias ek='etcdctl --endpoints=https://10.0.0.90:2379,https://10.0.0.89:2379,https://10.0.0.88:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt  --key /etc/kubernetes/pki/etcd/server.key --cert /etc/kubernetes/pki/etcd/server.crt'
+
+ek endpoint health - will show you health of the endpoints in the --endpoints flag
+
+ek member remove &lt;member&gt; as needed (make sure to not break quorum)
+</code></pre><p>You may need to use etcdctl with only working &ndash;endpoints (if you are trying to recover a broken etcd node and the cluster is still in quorum)</p>
+<h2 id="more-notes">More notes:</h2>
+<h4 id="node-exporter--not-shared-or-slave-mount">node-exporter / not shared or slave mount</h4>
+<p>When you inevitably try to run node-exporter on these LXC containers to monitor resources, you <em><em>may</em></em> run into:</p>
+<pre><code>Warning  Failed     43s (x4 over 80s)  kubelet, k8s-control-2  Error: failed to start container &quot;node-exporter&quot;: Error response from daemon: path / is mounted on / but it is not a shared or slave mount
+</code></pre><p>To fix this, run</p>
+<pre><code>mount --make-rshared /
+</code></pre><p>To make this permanent:</p>
+<pre><code>echo '#!/bin/sh -e
+mount --make-rshared /' &gt; /etc/rc.local
+chmod +x /etc/rc.local
+</code></pre><h4 id="100-of-one-cpu-core-usage-in-lxc-container-by-systemd-journald-process-in-recent-ubuntu-lxc-templates">100% of one CPU core usage in LXC container by systemd-journald process in recent Ubuntu LXC templates</h4>
+<p>The symlink I made from <code>/dev/console</code> to <code>/dev/kmsg</code> causes a infinite loop in <code>systemd</code> which tries to read from kmsg and write to console (this problem wouldn&rsquo;t have occured on a non-lxc setup).
+Various references: linkhere</p>
+<p>I didn&rsquo;t see any clear alternative to the symlink recommended previously though, so to try to work around the systemd loop situation:</p>
+<pre><code>mkdir /etc/systemd/journald.conf.d/; echo &quot;ReadKMsg=no&quot; &gt; /etc/systemd/journald.conf.d/kfilter.conf
+systemctl restart systemd-journald
+</code></pre><p>This still doesn&rsquo;t stop systemd-journald from occasionally taking up a core with its infinite loop, so there&rsquo;s still something to be investigated here. For now I just kill the process once after bootup if I see this situation (yes, ugly)</p>
+
+    </div>
+    <div class="post-footer">
+      <div class="info">
+        
+        
+    <span class="separator"><a class="tag" href="/tags/homelab/">homelab</a><a class="tag" href="/tags/kubernetes/">kubernetes</a><a class="tag" href="/tags/proxmox/">proxmox</a><a class="tag" href="/tags/lxc/">lxc</a><a class="tag" href="/tags/kubeadm/">kubeadm</a></span>
+
+      </div>
+    </div>
+    
+    <h3>Leave a comment :)</h3>
+    <script>
+      var remark_config = {
+        host: "https://comments.thelastguardian.me",
+        site_id: 'thelastguardianme',
+        url: "https://thelastguardian.me/posts/2020-01-10-kubernetes-in-lxc-on-proxmox/",
+        components: ['embed'],
+        theme: 'dark',
+      };
+    
+      (function(c) {
+        for(var i = 0; i < c.length; i++){
+          var d = document, s = d.createElement('script');
+          s.src = remark_config.host + '/web/' +c[i] +'.js';
+          s.defer = true;
+          (d.head || d.body).appendChild(s);
+        }
+      })(remark_config.components || ['embed']);
+    </script>
+    <div id="remark42"></div>
+    
+</div>
+
+
+                </div>
+            </div>
+        </div>
+</body>
+
+
+
+<script type="text/javascript" src="http://thelastguardian.me/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js" integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw=" crossorigin="anonymous"></script>
+
+
+
+
+<script type="text/javascript" src="http://thelastguardian.me/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js" integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="http://thelastguardian.me/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js" integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro=" crossorigin="anonymous"></script></html></body>
+
+</html>

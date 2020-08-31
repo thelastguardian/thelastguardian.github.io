@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>thelastguardian.me</title>
+    <link>http://thelastguardian.me/</link>
+    <description>Recent content on thelastguardian.me</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 10 Jan 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://thelastguardian.me/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>http://thelastguardian.me/about/</link>
+      <pubDate>Sun, 31 May 2020 04:33:04 +0530</pubDate>
+      
+      <guid>http://thelastguardian.me/about/</guid>
+      <description>Site Reliability Engineer. Gamer. PC Enthusiast. Datahoarder.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes in LXC on Proxmox</title>
+      <link>http://thelastguardian.me/posts/2020-01-10-kubernetes-in-lxc-on-proxmox/</link>
+      <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://thelastguardian.me/posts/2020-01-10-kubernetes-in-lxc-on-proxmox/</guid>
+      <description>Kubernetes in LXC containers on Proxmox Virtualization Environment</description>
+    </item>
+    
+    <item>
+      <title>HomeLab Part 2 - The Two Computers</title>
+      <link>http://thelastguardian.me/posts/2019-12-21-homelab-part-2-the-two-computers/</link>
+      <pubDate>Sat, 21 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://thelastguardian.me/posts/2019-12-21-homelab-part-2-the-two-computers/</guid>
+      <description>This post focuses primarily on how my setup actually turned into a home &amp;ldquo;lab&amp;rdquo; from two just-standalone systems.</description>
+    </item>
+    
+    <item>
+      <title>HomeLab Networking Part 1 - The VLANS - There and Back Again</title>
+      <link>http://thelastguardian.me/posts/2019-12-20-homelab-networking-part-1-the-vlans-there-and-back-again/</link>
+      <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://thelastguardian.me/posts/2019-12-20-homelab-networking-part-1-the-vlans-there-and-back-again/</guid>
+      <description>Complex network layout requirements? VLANs to the rescue! This is a side-post about how the network at my home developed over the years and how the homelab setup was laid out network-wise.</description>
+    </item>
+    
+    <item>
+      <title>HomeLab Part 1 - The Fellowship of the PC</title>
+      <link>http://thelastguardian.me/posts/2019-12-19-homelab-part-1-the-fellowship-of-the-pc/</link>
+      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://thelastguardian.me/posts/2019-12-19-homelab-part-1-the-fellowship-of-the-pc/</guid>
+      <description>Homelab?</description>
+    </item>
+    
+    <item>
+      <title>Hello World</title>
+      <link>http://thelastguardian.me/posts/2019-12-01-hello-world/</link>
+      <pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://thelastguardian.me/posts/2019-12-01-hello-world/</guid>
+      <description>hello world :)</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://thelastguardian.me/404/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://thelastguardian.me/404/</guid>
+      <description>There is nothing to see here. Or is there?</description>
+    </item>
+    
+  </channel>
+</rss>

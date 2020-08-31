@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme=""><head>
+    <title> thelastguardian | HomeLab Part 1 - The Fellowship of the PC </title>
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.71.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="Site Reliability Engineer. Gamer. PC Enthusiast. Datahoarder.">
+    
+    <link rel="stylesheet" href="http://thelastguardian.me/css/style.min.5be3a155aa89a24586c761b1b5538c4040e3735ee32ac12a708dc1696c0982f5.css" integrity="sha256-W&#43;OhVaqJokWGx2GxtVOMQEDjc17jKsEqcI3BaWwJgvU=" crossorigin="anonymous" type="text/css"><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+    <link rel="shortcut icon" href="http://thelastguardian.me/favicons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="http://thelastguardian.me/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://thelastguardian.me/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://thelastguardian.me/favicons/favicon-16x16.png">
+    <link rel="canonical" href="http://thelastguardian.me/posts/2019-12-19-homelab-part-1-the-fellowship-of-the-pc/">
+    
+    
+    <script type="text/javascript" src="http://thelastguardian.me/js/anatole-header.min.7e2fc0724240b28c6e214687e73a4a6eb6c196bbace546b9dc86e94cca120b5c.js" integrity="sha256-fi/AckJAsoxuIUaH5zpKbrbBlrus5Ua53IbpTMoSC1w=" crossorigin="anonymous"></script>
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="HomeLab Part 1 - The Fellowship of the PC"/>
+<meta name="twitter:description" content="Homelab?"/>
+
+</head><body><div class="sidebar animated fadeInDown">
+    <div class="logo-title">
+      <div class="title">
+        <img src="http://thelastguardian.me/images/tom-cat-reading-newspaper.jpeg" alt="profile picture">
+        <h3 title=""><a href="/">thelastguardian.me</a></h3>
+        <div class="description">
+          <p>Site Reliability Engineer. Gamer. PC Enthusiast. Datahoarder.</p>
+        </div>
+      </div>
+    </div>
+    <ul class="social-links">
+        
+        <li>
+        <a href="https://www.linkedin.com/in/vinaydargar/" rel="me" aria-label="Linkedin">
+          <i class="fa fa-2x fa-linkedin" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="https://github.com/thelastguardian/" rel="me" aria-label="GitHub">
+          <i class="fa fa-2x fa-github" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="mailto:me@thelastguardian.me" rel="me" aria-label="e-mail">
+          <i class="fa fa-2x fa-envelope" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+    </ul>
+    <div class="footer">
+        <div class="by_farbox">&copy; thelastguardian 2020 </div>
+      </div>
+    </div>
+</div><div class="main">
+            <div class="page-top animated fadeInDown">
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    <ul class="nav" id="navMenu">
+        
+        
+        
+        <li><a  href="/"  title="">Home</a></li>
+        
+        
+        <li><a  href="/about/"  title="">About</a></li>
+        
+        
+        <li><a  href="/posts/"  title="">Posts</a></li>
+        
+        
+        <li><a  href="/tags/"  title="">Tags</a></li>
+        
+        
+        <li class="theme-switch-item">
+        <a class="theme-switch" title="Switch Theme">
+            <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+        </a>
+        </li>
+    </ul>
+</div>
+
+            <div class="autopagerize_page_element">
+                <div class="content">
+<div class="post animated fadeInDown">
+    <div class="post-content">
+
+      <div class="post-title">
+        <h3>HomeLab Part 1 - The Fellowship of the PC
+        </h3>
+        
+        </div>
+
+    <h1 id="homelab">Homelab?</h1>
+<p>Ever since I was younger, I&rsquo;ve always liked to make the most out of the electronics and computing devices I&rsquo;ve had. Why settle for just what the manufacturer or designer intended the device to be for, when the device is capable of so much more? Have a midrange laptop for &ldquo;coding&rdquo;? Why not run multiplayer game servers on it? Have a basic wifi router? Why not run a VPN server on it? Have a non-potato phone? Why not use it as SSH client and proxy?</p>
+<p>For college, my parents bought me a <a href="https://www.dell.com/en-us/shop/cty/pdp/spd/inspiron-17r-se-7720">Dell Inspiron 17R Special Edition</a>, a 17.3&rdquo; class multimedia laptop with a quad-core Intel i7 3630QM, 8GB of RAM, and a mid range NVIDIA GT650M GPU. This laptop was a great purchase - the 17&rdquo; class allowed Dell to provide not one but two internal 2.5&rdquo; SATA3 HDD bays, along with a SATA2 optical disk drive, and an mSATA2 SSD slot. The Skullcandy mini-subwoofer, with a lot of tuning, provided great audio for a laptop, and while I couldn&rsquo;t get the 1080p screen variant, the 1600x900 screen was a treat over the mainstream 1366x768 laptop screens of the time. Cooling was great, and the touchpad was reliable. The only downside was a 100mbit LAN port instead of a gigabit port, but other than that, the laptop served me well. It&rsquo;s still in great condition, with an upgrade to 12GB of RAM, a 250GB Samsung 850 Evo SATA SSD, and two more 1TB 2.5&rdquo; HDDs in the internal SATA ports (who needs DVD drives anymore?).</p>
+<p>I spent a lot of time browsing reddit.com/r/homelab/ and the like, in awe of the cool things people put their hardware to use for. Spending 4 years in college with a mainly a laptop and a Raspberry Pi 2B+, meant learning how to do everything I wanted, on just these devices. After graduating, I indulged myself in setting up a good lab at home, to satisfy my interest in tinkering and DIY, and to further my SRE skills. This is a set of long overdue blog posts about the setup and how it developed over the past year. People who know me in real life may notice that a lot of it mirrors my ~partner in crime~ friend <a href="https://illustris.tech/it/linux/home-setup-pt1/">illustris&rsquo;s journey</a>, since we undertook it together.</p>
+<h1 id="the-pc">The PC</h1>
+<p>After years of using admittedly good value, performant laptops, I knew I wanted to build a desktop system, to dabble in things my laptop was falling short for. As soon as I moved home to Mumbai, I set out to build a &ldquo;future-proof&rdquo; system - the parts and a bit of reasoning follow. I bought all my parts from a friend-recommended retailer, <a href="http://www.computerselection.in/">Computer Selection</a>.</p>
+<h2 id="cpu-ryzen-7-2700xhttpswwwamdcomenproductscpuamd-ryzen-7-2700x">CPU: <a href="https://www.amd.com/en/products/cpu/amd-ryzen-7-2700x">Ryzen 7 2700X</a></h2>
+<p>AMD has been coming up fast on a slumbering Intel, with competitive CPUs providing much of the single-threaded performance of Intel CPUs, and a refreshing move to higher core counts in mainstream desktops. Intel wanted your left kidney for a high end 8 core CPU, with miniscule generation-on-generation IPC and technology improvements. Couple that with the Spectre and Meltdown family of exploits which hit Intel harder than AMD, and I and Illustris decided Team Red was a good option for an upgradable and flexible PC. The AM4 socket was also promised to last a couple of generations further, but I wanted the best CPU possible for it at the time, to not have to think about an upgrade soon.</p>
+<blockquote>
+<p>Specs: Zen+ architecture, 8 Core/16 Thread, 3.7GHz base, 4.3GHz single-core boost, 105W TDP, 16MB L3 cache</p>
+</blockquote>
+<h2 id="motherboard-asus-crosshair-vii-herohttpswwwasuscominmotherboardsrog-crosshair-vii-hero">Motherboard: <a href="https://www.asus.com/in/Motherboards/ROG-CROSSHAIR-VII-HERO/">Asus Crosshair VII Hero</a></h2>
+<p>Intel&rsquo;s platform had had the upper hand in feature-packed motherboards for a while, but with AMD putting up a good fight, motherboard manufacturers were happy to level the playing field. The Crosshair VII Hero was the mainstream top-end motherboard for AMD&rsquo;s X470 platform, with a well supported RGB ecosystem - Asus&rsquo;s AuraSync. Everyone knows RGB makes your PC faster, so this was an important factor ;). The C7H also promised to be great for overclocking, had a great UEFI bios, and ticked all the DIY-friendly boxes (check out the specs sheet!).</p>
+<blockquote>
+<p>Features: ASUS AuraSync, two Addressable RGB headers, two 12V RGB headers, 3 PWM fan headers, AIO Pump header, ASUS QCode LED, USB Bios Flashback, custom watercooling loop support, etc.</p>
+</blockquote>
+<h2 id="ram-adata-xpg-spectrix-d40httpswwwxpgcomusfeature482">RAM: <a href="https://www.xpg.com/us/feature/482/">ADATA XPG Spectrix D40</a></h2>
+<p>The fastest RAM I could find at the time, 3200MHz at CL16-18-18 latency. Since Ryzen&rsquo;s performance is <a href="https://www.tomshardware.com/reviews/amd-ryzen-5-1600x-cpu-review,5014-2.html">linked to RAM frequency and latency</a>, this was important, but it&rsquo;s not easy getting faster RAM modules in India (even 3200MHz - CL16-16-16 was unavailable).</p>
+<blockquote>
+<p>Specs: 3200MHz CL16-18-18 @ 1.35V, Asus/MSI/Gigabyte/ASRock RGB compatible with 5 LEDs per stick</p>
+</blockquote>
+<h2 id="graphics-card-asus-phoenix-1050ti-4gb-gddr5httpswwwasuscomingraphics-cardsph-gtx1050ti-4g">Graphics card: <a href="https://www.asus.com/in/Graphics-Cards/PH-GTX1050TI-4G/">Asus Phoenix 1050Ti 4GB GDDR5</a></h2>
+<p>This build was in July 2018, and Nvidia&rsquo;s 1000 series of graphics cards had been out for about 2 years at this point. Their next generation was likely around the corner, and I wanted to use the upcoming months to gauge what I really needed. My budget was also limited, and so I settled on the midrange 1050Ti to hold me over until the next generation.</p>
+<blockquote>
+<p>Specs: 4GB GDDR5, 768 CUDA cores, GPU Boost Clock: 1392 MHz, Base Clock: 1290 MHz, single fan, no auxiliary power connector.</p>
+</blockquote>
+<h2 id="case-gigabyte-ac300w-r2httpswwwgigabytecominchassisgb-ac300w-rev-20kf">Case: <a href="https://www.gigabyte.com/in/Chassis/GB-AC300W-rev-20#kf">Gigabyte AC300W R2</a></h2>
+<p>This case looks entry/mid level, but I liked it for features rarely seen in this category - front USB C, support for 6 fans, PSU shroud, pretty good RGB, detachable magnetic dust filters.</p>
+<h2 id="storage-500gb-samsung-960-evo-nvme-ssdhttpswwwsamsungcomuscomputingmemory-storagesolid-state-drivesssd-960-evo-m-2-500gb-mz-v6e500bw-4tb-wd-blue-hddhttpsshopwesterndigitalcomproductsinternal-driveswd-blue-desktop-sata-hdd">Storage: <a href="https://www.samsung.com/us/computing/memory-storage/solid-state-drives/ssd-960-evo-m-2-500gb-mz-v6e500bw/">500GB Samsung 960 Evo NVME SSD</a>, <a href="https://shop.westerndigital.com/products/internal-drives/wd-blue-desktop-sata-hdd">4TB WD Blue HDD</a></h2>
+<p>I&rsquo;m a bit of a /r/DataHoarder/ at heart, and the X470 platform has a dedicated NVME x4 connection to the CPU. While I intend to have much more media storage down the line, I decided to start with a reasonable 4TB HDD for documents and games, and the well respected Samsung 960 Evo NVME SSD for the boot disk.</p>
+<h2 id="psu-corsair-cx650mhttpswwwcorsaircomusencategoriesproductspower-supply-unitscxm-series-2015-configpcp-9020103-na">PSU: <a href="https://www.corsair.com/us/en/Categories/Products/Power-Supply-Units/cxm-series-2015-config/p/CP-9020103-NA">Corsair CX650M</a></h2>
+<p>Honestly, I didn&rsquo;t investigate this choice much, this was the most common semi-modular 650W range PSU, it was at a reasonable price, and it would definitely cover even an overclocked 2700X + top end GPU.</p>
+<blockquote>
+<p>Specs: Semi Modular, 650W, Rating: 80+ Bronze Certified</p>
+</blockquote>
+<h2 id="network-tp-link-tl-sg108ehttpswwwtp-linkcomukbusiness-networkingunmanaged-pro-switchtl-sg108e">Network: <a href="https://www.tp-link.com/uk/business-networking/unmanaged-pro-switch/tl-sg108e/">TP Link TL-SG108E</a></h2>
+<p>My home apartment poses quite a bit of complexity in the network department, which is a story for a future blog post. I picked up a couple of TP Link &ldquo;Easy Smart&rdquo; 8 port Gigabit switches. At the time, all I needed was basic VLAN support, so this would do the job well.</p>
+<blockquote>
+<p>Specs: 8 10/100/1000Mbps RJ45 Ports, upto 32 VLANs, MTU/Port/Tag VLAN, fanless, metal body, Web configuration GUI, IGMP Snooping V1/V2/V3, 2 2-port Link Aggregation, Port Mirroring, Cable Diagnostics, Loop Prevention</p>
+</blockquote>
+<hr>
+<h2 id="with-a-good-pc-built-and-a-decent-laptop-it-was-homelab-time">With a good PC built, and a decent laptop, it was HomeLab Time!</h2>
+<hr>
+
+    </div>
+    <div class="post-footer">
+      <div class="info">
+        
+        
+    <span class="separator"><a class="tag" href="/tags/homelab/">homelab</a><a class="tag" href="/tags/hardware/">hardware</a></span>
+
+      </div>
+    </div>
+    
+    <h3>Leave a comment :)</h3>
+    <script>
+      var remark_config = {
+        host: "https://comments.thelastguardian.me",
+        site_id: 'thelastguardianme',
+        url: "https://thelastguardian.me/posts/2019-12-19-homelab-part-1-the-fellowship-of-the-pc/",
+        components: ['embed'],
+        theme: 'dark',
+      };
+    
+      (function(c) {
+        for(var i = 0; i < c.length; i++){
+          var d = document, s = d.createElement('script');
+          s.src = remark_config.host + '/web/' +c[i] +'.js';
+          s.defer = true;
+          (d.head || d.body).appendChild(s);
+        }
+      })(remark_config.components || ['embed']);
+    </script>
+    <div id="remark42"></div>
+    
+</div>
+
+
+                </div>
+            </div>
+        </div>
+</body>
+
+
+
+<script type="text/javascript" src="http://thelastguardian.me/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js" integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw=" crossorigin="anonymous"></script>
+
+
+
+
+<script type="text/javascript" src="http://thelastguardian.me/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js" integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="http://thelastguardian.me/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js" integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro=" crossorigin="anonymous"></script></html></body>
+
+</html>

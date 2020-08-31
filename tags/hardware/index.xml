@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hardware on thelastguardian.me</title>
+    <link>http://thelastguardian.me/tags/hardware/</link>
+    <description>Recent content in hardware on thelastguardian.me</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://thelastguardian.me/tags/hardware/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>HomeLab Part 1 - The Fellowship of the PC</title>
+      <link>http://thelastguardian.me/posts/2019-12-19-homelab-part-1-the-fellowship-of-the-pc/</link>
+      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://thelastguardian.me/posts/2019-12-19-homelab-part-1-the-fellowship-of-the-pc/</guid>
+      <description>Homelab?</description>
+    </item>
+    
+  </channel>
+</rss>

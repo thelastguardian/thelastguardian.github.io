@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme=""><head>
+    <title> thelastguardian | HomeLab Part 2 - The Two Computers </title>
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.71.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="Site Reliability Engineer. Gamer. PC Enthusiast. Datahoarder.">
+    
+    <link rel="stylesheet" href="http://thelastguardian.me/css/style.min.5be3a155aa89a24586c761b1b5538c4040e3735ee32ac12a708dc1696c0982f5.css" integrity="sha256-W&#43;OhVaqJokWGx2GxtVOMQEDjc17jKsEqcI3BaWwJgvU=" crossorigin="anonymous" type="text/css"><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+    <link rel="shortcut icon" href="http://thelastguardian.me/favicons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="http://thelastguardian.me/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://thelastguardian.me/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://thelastguardian.me/favicons/favicon-16x16.png">
+    <link rel="canonical" href="http://thelastguardian.me/posts/2019-12-21-homelab-part-2-the-two-computers/">
+    
+    
+    <script type="text/javascript" src="http://thelastguardian.me/js/anatole-header.min.7e2fc0724240b28c6e214687e73a4a6eb6c196bbace546b9dc86e94cca120b5c.js" integrity="sha256-fi/AckJAsoxuIUaH5zpKbrbBlrus5Ua53IbpTMoSC1w=" crossorigin="anonymous"></script>
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="HomeLab Part 2 - The Two Computers"/>
+<meta name="twitter:description" content="This post focuses primarily on how my setup actually turned into a home &ldquo;lab&rdquo; from two just-standalone systems."/>
+
+</head><body><div class="sidebar animated fadeInDown">
+    <div class="logo-title">
+      <div class="title">
+        <img src="http://thelastguardian.me/images/tom-cat-reading-newspaper.jpeg" alt="profile picture">
+        <h3 title=""><a href="/">thelastguardian.me</a></h3>
+        <div class="description">
+          <p>Site Reliability Engineer. Gamer. PC Enthusiast. Datahoarder.</p>
+        </div>
+      </div>
+    </div>
+    <ul class="social-links">
+        
+        <li>
+        <a href="https://www.linkedin.com/in/vinaydargar/" rel="me" aria-label="Linkedin">
+          <i class="fa fa-2x fa-linkedin" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="https://github.com/thelastguardian/" rel="me" aria-label="GitHub">
+          <i class="fa fa-2x fa-github" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="mailto:me@thelastguardian.me" rel="me" aria-label="e-mail">
+          <i class="fa fa-2x fa-envelope" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+    </ul>
+    <div class="footer">
+        <div class="by_farbox">&copy; thelastguardian 2020 </div>
+      </div>
+    </div>
+</div><div class="main">
+            <div class="page-top animated fadeInDown">
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    <ul class="nav" id="navMenu">
+        
+        
+        
+        <li><a  href="/"  title="">Home</a></li>
+        
+        
+        <li><a  href="/about/"  title="">About</a></li>
+        
+        
+        <li><a  href="/posts/"  title="">Posts</a></li>
+        
+        
+        <li><a  href="/tags/"  title="">Tags</a></li>
+        
+        
+        <li class="theme-switch-item">
+        <a class="theme-switch" title="Switch Theme">
+            <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+        </a>
+        </li>
+    </ul>
+</div>
+
+            <div class="autopagerize_page_element">
+                <div class="content">
+<div class="post animated fadeInDown">
+    <div class="post-content">
+
+      <div class="post-title">
+        <h3>HomeLab Part 2 - The Two Computers
+        </h3>
+        
+        </div>
+
+    <hr>
+<h1 id="the-homelab-begins">The HomeLab begins</h1>
+<p>As most people new to this start out, I wanted to run pfSense on spare hardware I had - my college laptop. It was overkill for this and a waste of resources though, and I&rsquo;d found virtualization to be the solution to everything over the past few years, after having experimented with VirtualBox in my college years.</p>
+<p>Around this time (January 2019), my friend <a href="https://illustris.tech/it/linux/home-setup-pt2/">Illustris</a> had been testing out ESXi, a baremetal hypervisor, to run pfSense on his similarly overkill laptop, along with other workloads.</p>
+<p>Unfortunately, my laptop was not as &ldquo;spare&rdquo; as I wanted it to be - my family still needed to use Windows 10 on it, so I couldn&rsquo;t install the  hypervisor-only ESXi on it as the primary OS. While one could certainly run Windows as a guest OS in ESXi on the laptop, my CPU didn&rsquo;t support passthrough of the Intel integrated graphics <a href="https://github.com/intel/gvt-linux/wiki/GVTg_Setup_Guide">GVT-g</a>. The GT650M is configured as a <a href="https://www.reddit.com/r/VFIO/comments/7qunh4/why_isnt_optimus_muxless_on_windows_guest/">muxless Nvidia Optimus</a> setup in my laptop - it has no display ports connected to it directly, it just renders to the outputs connected to the Intel iGPU. This means I couldn&rsquo;t easily use Windows as a guest on my laptop with the experience my family would expect - they don&rsquo;t want to have to mess around with remote desktop and stuff to use the guest OS. It&rsquo;s <a href="https://www.reddit.com/r/VFIO/comments/8gv60l/current_state_of_optimus_muxless_laptop_gpu/">tricky enough</a> to get the GPU passed at all, let alone be able to use the laptop display from a guest VM.</p>
+<p>[Also, Asus&rsquo;s AuraSync RGB control panel software only works when on bare-metal Windows, since it interfaces with the motherboard through i2c. The software refuses to load to control other devices if the motherboard is not detected, which it won&rsquo;t be when inside a virtual machine. To be able to control the RGB on my desktop, I wanted to stay on Windows 10 as a host OS.]</p>
+<h2 id="which-hypervisor">Which hypervisor?</h2>
+<p>ESXi is a Type 1 hypervisor - it runs at a bare metal level, and runs your virtualization workloads with hardware-acceleration and the ability to pass through nearly any physical device on your host to guest VMs.</p>
+<p>On the other hand, software like VirtualBox is what is called a Type 2 hypervisor - the software runs on a fully-featured host operating system, as just another program. It still uses hardware acceleration where possible to virtualize your guest, but it is limited in functionality - it cannot pass through arbitrary PCIe devices from your host, because as a userspace program it doesn&rsquo;t have exclusive control of the hardware. It can pass through some things like USB devices, but not devices like PCIe graphics cards, or entire USB controllers, or host audio controllers, and so on. <a href="https://docs.oracle.com/cd/E97728_01/F12469/html/pcipassthrough.html">VirtualBox on linux hosts did claim to have experimental support for PCIe passthrough</a>, but this wasn&rsquo;t applicable to me since I had to run a Windows host.</p>
+<p>Linux&rsquo;s KVM is interesting - KVM itself could be considered a type 2 hypervisor, since guest VMs run by it are simply yet another program to the host OS. But, it has all the features of a type 1 hypervisor, since it&rsquo;s part of the kernel - it works with the host to provide full device control and passthrough to guests. <a href="https://www.redhat.com/en/topics/virtualization/what-is-KVM">This</a> and <a href="https://www.stratoscale.com/blog/cloud/cloud-101-kvm/">this</a> are helpful resources on <a href="https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine">this</a>.</p>
+<p>Wait a minute, if Linux can do that, why hasn&rsquo;t Microsoft built this into Windows? They have - <a href="https://en.wikipedia.org/wiki/Hyper-V">HyperV</a> is a close analog. When you enable HyperV on a Windows OS, the thin hypervisor layer is actually inserted below the current host OS, which is then actually a guest OS on top of HyperV, albeit a special &ldquo;primary&rdquo; one. You can then run guest virtual machines with hardware acceleration and even dynamic memory sizing, connected to customizable host network bridges and switches, manageable by a HyperV control panel inside Windows. Is PCIe passthrough possible? <a href="https://devblogs.microsoft.com/scripting/passing-through-devices-to-hyper-v-vms-by-using-discrete-device-assignment/">Yes!</a> Sadly, Microsoft has <a href="https://www.reddit.com/r/HyperV/comments/8jwt5c/windows_10_hyperv_dda/">locked that functionality to only the Server SKUs</a> of Windows :(. While people do run Windows Server SKUs as primary gaming PCs, I didn&rsquo;t want to deal with this, so I resigned myself to not being able to pass physical devices to HyperV guests.</p>
+<p>The good thing was, nearly everything I wanted to do could be managed without that - HyperV supports creating virtual NICs with VLAN tagging, bridged to specific host network adapters, even when shared with the host OS. Best of all, I could keep running Windows 10 so my family&rsquo;s usecases would be unaffected - there would just be some RAM taken up by my HyperV guests.</p>
+<hr>
+<p>Now that I had a way to run non-Windows things on my laptop and desktop, it was time to get started on the first batch of my homelab bucketlist:</p>
+<h1 id="workloads">Workloads</h1>
+<h2 id="pfsense">pfSense</h2>
+<p>pfSense is a FreeBSD-based software firewall and router distro, and it comes with enough functionality and features for everyone from beginner home users to mid-level enterprises running multiple datacenters.</p>
+<p>Since my laptop only had a single 100mbit port, I bought a USB to gigabit Ethernet adapter to use with pfSense. I assigned a normal virtual NIC configured on the bridge of the host&rsquo;s USB adapter NIC, to which I connected the ethernet cable that was connected to my ISP&rsquo;s FTTB router. How this was laid out physically was a bit of an embarrasment - I had a 15 meter ethernet cable from my apartment&rsquo;s hall, where the WAN drop was, through a short hop via a wall jack, to the laptop in my room. The ethernet cable from my laptop to the room&rsquo;s switch was snaked over and under my cupboards, and the ethernet cable back to the switch in the hall was taped along the edges of my room and walls. Needless to say, my parents weren&rsquo;t pleased with the look. I had to stick with it though, until I figured out how to deal with my network layout with VLANs. That&rsquo;s a topic for a separate post though.</p>
+<p>I had given the pfSense VM 2 cores and 1GB of RAM, and a maxed out 100+100 mbps transfer on WAN stayed under 70% CPU usage.</p>
+<h2 id="openvpn">OpenVPN</h2>
+<p>pfSense bundles a few VPN servers - PPTP/L2TP, and OpenVPN. It&rsquo;s easy to set up a configured OpenVPN server in the pfSense GUI, and generate client configs for my Android Phone, and OpenVPN clients on Linux and Windows. With OpenVPN bridged at Layer 2, my clients get an IP within my home network&rsquo;s subnet and thus behave as if they are actually on the network, no matter where I am connecting from. With a Layer 3 OpenVPN configuration, clients get an IP in a separate OpenVPN-specific subnet. This is easier to set up but has some limitations compared to a Layer2 bridged VPN.</p>
+<h2 id="freenas">FreeNAS</h2>
+<p>FreeNAS is another FreeBSD-based distro focused on storage management and sharing. It supports complex disk layouts and multiple ways to expose storage over the network, but at the time I created a quick 200GB disk to pass to the FreeNAS VM, to share over NFS and SMB. I would later go on to make a more extensive, redundant physical disk setup, and FreeNAS helped me understand how ZFS is set up and works.</p>
+<h2 id="docker">Docker</h2>
+<p>I&rsquo;ve been a fan of containerization ever since I worked on it in an internship, and a lot of usecases like torrent clients, web-based file browsers, collaborative notes, and so on, are well packaged in Docker containers. I set up an LXC container on ProxMox with Docker installed inside, and used Docker Swarm with host-mode networking to run various containers. One of them was Portainer, a GUI to manage Docker hosts and their containers.</p>
+<blockquote>
+<p>Side note: I ran into issues getting Docker Swarm&rsquo;s non-host networking working inside an LXC container. The &ldquo;virtual&rdquo; service IP addresses were unreachable, so ports mapped on services in the mesh network were unavailable. I ran host-mode networking as a workaround temporarily.</p>
+</blockquote>
+<h2 id="elasticsearch">Elasticsearch</h2>
+<p>The Elasticsearch-Logstash/Beats-Kibana (ELK) stack is pretty popular for log aggregation and text search, and I work on a few clusters at work. I wanted to run a small cluster at home to store and analyse system logs and performance metrics, like hardware temperatures, CPU clock speeds, power draw.</p>
+<h2 id="other-containers">Other containers</h2>
+<ul>
+<li>
+<p>Deluge seedbox: A good enough torrent client, and now that I had unlimited, fast internet at home, it was time to seed Linux ISOs and give back to the community.</p>
+</li>
+<li>
+<p>Puppet: At work, I also was introduced to Puppet, a pull-based configuration management system for small-to-large fleets of servers, complete with a Ruby-based DSL and YAML configuration files. As with most things, trying out work tech at home is a great way to become more comfortable with it!</p>
+</li>
+<li>
+<p>Plex: Plex shouldn&rsquo;t need much introduction - it&rsquo;s not opensource but is still a great entry-level media server to host your media and stream it to other local and internet devices. I had a lot of media collected and the collection was only going to grow to a dedicated NAS level of hoarding, so it was time to set up Plex on my media.</p>
+</li>
+</ul>
+<hr>
+<p>Between all of these workloads, it finally felt like I was putting my PC and my old laptop to good use. Sure, I was called a Windows fanboy and a heathen by my friend Illustris, for running a HyperV cluster, but that was a price I was willing to pay. For now, atleast. I would soon notice that the &ldquo;dynamic memory ballooning&rdquo; feature of Hyper-V didn&rsquo;t work as well as expected, and setting aside a major chunk of my RAM for non-Windows workloads and not being able to dynamically adjust it was a downer. My laptop also drew more power than I expected it to need with a couple of Linux VMs in HyperV, and it looked like virtualization overhead on the old 3rd gen i7 processor noticeably added to CPU power usage and temperatures. There was no way to run lightweight containers on Hyper-V, and it was pretty inefficient to run full virtual machines. I kept my docker containers consolidated in a single VM, but I didn&rsquo;t want to stuff in the ELK stack, the puppetserver, and other stuff, on the same VM. FreeNAS and pfSense had to run in separate VMs anyway.</p>
+<p>I ran with this setup for a few months, until the events of Homelab Part 3 came around.</p>
+<blockquote>
+<p>Note: This post was written much later than these events</p>
+</blockquote>
+
+    </div>
+    <div class="post-footer">
+      <div class="info">
+        
+        
+    <span class="separator"><a class="tag" href="/tags/homelab/">homelab</a></span>
+
+      </div>
+    </div>
+    
+    <h3>Leave a comment :)</h3>
+    <script>
+      var remark_config = {
+        host: "https://comments.thelastguardian.me",
+        site_id: 'thelastguardianme',
+        url: "https://thelastguardian.me/posts/2019-12-21-homelab-part-2-the-two-computers/",
+        components: ['embed'],
+        theme: 'dark',
+      };
+    
+      (function(c) {
+        for(var i = 0; i < c.length; i++){
+          var d = document, s = d.createElement('script');
+          s.src = remark_config.host + '/web/' +c[i] +'.js';
+          s.defer = true;
+          (d.head || d.body).appendChild(s);
+        }
+      })(remark_config.components || ['embed']);
+    </script>
+    <div id="remark42"></div>
+    
+</div>
+
+
+                </div>
+            </div>
+        </div>
+</body>
+
+
+
+<script type="text/javascript" src="http://thelastguardian.me/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js" integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw=" crossorigin="anonymous"></script>
+
+
+
+
+<script type="text/javascript" src="http://thelastguardian.me/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js" integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="http://thelastguardian.me/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js" integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro=" crossorigin="anonymous"></script></html></body>
+
+</html>
