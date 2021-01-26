@@ -1,94 +1,141 @@
 <!DOCTYPE html>
 <html lang="en" data-theme=""><head>
     <title> thelastguardian | HomeLab Networking Part 1 - The VLANS - There and Back Again </title>
-    <meta charset="utf-8"><meta name="generator" content="Hugo 0.71.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+    
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="description" content="Site Reliability Engineer. Gamer. PC Enthusiast. Datahoarder.">
     
-    <link rel="stylesheet" href="http://thelastguardian.me/css/style.min.5be3a155aa89a24586c761b1b5538c4040e3735ee32ac12a708dc1696c0982f5.css" integrity="sha256-W&#43;OhVaqJokWGx2GxtVOMQEDjc17jKsEqcI3BaWwJgvU=" crossorigin="anonymous" type="text/css"><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="http://thelastguardian.me/css/style.min.bb7146835efb4da60bec03e4c446c3a3b94260c78c8bdb82057b37dab9c8768e.css"
+          integrity="sha256-u3FGg177TaYL7APkxEbDo7lCYMeMi9uCBXs32rnIdo4="
+          crossorigin="anonymous"
+          type="text/css">
+    
+    <link rel="stylesheet"
+        href="http://thelastguardian.me/css/markupHighlight.min.9755453ffb7bc4cd220f86ebb5922107b49f193cc62fc17e9785d27b33a8bf5b.css"
+        integrity="sha256-l1VFP/t7xM0iD4brtZIhB7SfGTzGL8F&#43;l4XSezOov1s="
+        crossorigin="anonymous"
+        type="text/css">
+    
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" 
+    integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" 
+    crossorigin="anonymous" />
+
     
     <link rel="shortcut icon" href="http://thelastguardian.me/favicons/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="http://thelastguardian.me/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="http://thelastguardian.me/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="http://thelastguardian.me/favicons/favicon-16x16.png">
+
     <link rel="canonical" href="http://thelastguardian.me/posts/2019-12-20-homelab-networking-part-1-the-vlans-there-and-back-again/">
+
     
     
-    <script type="text/javascript" src="http://thelastguardian.me/js/anatole-header.min.7e2fc0724240b28c6e214687e73a4a6eb6c196bbace546b9dc86e94cca120b5c.js" integrity="sha256-fi/AckJAsoxuIUaH5zpKbrbBlrus5Ua53IbpTMoSC1w=" crossorigin="anonymous"></script>
+    
+    
+    <script type="text/javascript"
+            src="http://thelastguardian.me/js/anatole-header.min.d8599ee07b7d3f11bafbac30657ccc591e8d7fd36a9f580cd4c09e24e0e4a971.js"
+            integrity="sha256-2Fme4Ht9PxG6&#43;6wwZXzMWR6Nf9Nqn1gM1MCeJODkqXE="
+            crossorigin="anonymous"></script>
+
+
+    
+        
+        
+        <script type="text/javascript"
+                src="http://thelastguardian.me/js/anatole-theme-switcher.min.e289e9ebb2a4e7a7f895859c8a2b0da2de1ec73f22cea58d8475aa0597023837.js"
+                integrity="sha256-4onp67Kk56f4lYWciisNot4exz8izqWNhHWqBZcCODc="
+                crossorigin="anonymous"></script>
+    
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="HomeLab Networking Part 1 - The VLANS - There and Back Again"/>
 <meta name="twitter:description" content="Complex network layout requirements? VLANs to the rescue! This is a side-post about how the network at my home developed over the years and how the homelab setup was laid out network-wise."/>
 
-</head><body><div class="sidebar animated fadeInDown">
+</head>
+<body><div class="sidebar animated fadeInDown ">
     <div class="logo-title">
-      <div class="title">
-        <img src="http://thelastguardian.me/images/tom-cat-reading-newspaper.jpeg" alt="profile picture">
-        <h3 title=""><a href="/">thelastguardian.me</a></h3>
-        <div class="description">
-          <p>Site Reliability Engineer. Gamer. PC Enthusiast. Datahoarder.</p>
+        <div class="title">
+            <img src="http://thelastguardian.me/images/tom-cat-reading-newspaper.jpeg" alt="profile picture">
+            <h3 title=""><a href="/">thelastguardian.me</a></h3>
+            <div class="description">
+                <p>Site Reliability Engineer. Gamer. PC Enthusiast. Datahoarder.</p>
+            </div>
         </div>
-      </div>
     </div>
     <ul class="social-links">
         
-        <li>
-        <a href="https://www.linkedin.com/in/vinaydargar/" rel="me" aria-label="Linkedin">
-          <i class="fa fa-2x fa-linkedin" aria-hidden="true"></i>
-        </a>          
-        </li>
-
+            <li>
+                <a href="https://www.linkedin.com/in/vinaydargar/" rel="me" aria-label="Linkedin">
+                    <i class="fa-linkedin fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
         
-        <li>
-        <a href="https://github.com/thelastguardian/" rel="me" aria-label="GitHub">
-          <i class="fa fa-2x fa-github" aria-hidden="true"></i>
-        </a>          
-        </li>
-
+            <li>
+                <a href="https://github.com/thelastguardian/" rel="me" aria-label="GitHub">
+                    <i class="fa-github fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
         
-        <li>
-        <a href="mailto:me@thelastguardian.me" rel="me" aria-label="e-mail">
-          <i class="fa fa-2x fa-envelope" aria-hidden="true"></i>
-        </a>          
-        </li>
-
+            <li>
+                <a href="mailto:me@thelastguardian.me" rel="me" aria-label="e-mail">
+                    <i class="fa-envelope fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
         
     </ul>
     <div class="footer">
-        <div class="by_farbox">&copy; thelastguardian 2020 </div>
-      </div>
+        <div class="by_farbox">&copy; thelastguardian  2021 </div>
     </div>
-</div><div class="main">
-            <div class="page-top animated fadeInDown">
-    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" >
+</div>
+<div class="main">
+    <div class="page-top  animated fadeInDown ">
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
-      </a>
+    </a>
     <ul class="nav" id="navMenu">
         
         
+            
+            <li><a 
+                   href="/"
+                        
+                   title="">Home</a></li>
         
-        <li><a  href="/"  title="">Home</a></li>
+            
+            <li><a 
+                   href="/about/"
+                        
+                   title="">About</a></li>
+        
+            
+            <li><a 
+                   href="/posts/"
+                        
+                   title="">Posts</a></li>
+        
+            
+            <li><a 
+                   href="/tags/"
+                        
+                   title="">Tags</a></li>
         
         
-        <li><a  href="/about/"  title="">About</a></li>
         
+            <li class="theme-switch-item">
+                <a class="theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </li>
         
-        <li><a  href="/posts/"  title="">Posts</a></li>
-        
-        
-        <li><a  href="/tags/"  title="">Tags</a></li>
-        
-        
-        <li class="theme-switch-item">
-        <a class="theme-switch" title="Switch Theme">
-            <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
-        </a>
-        </li>
     </ul>
 </div>
 
-            <div class="autopagerize_page_element">
-                <div class="content">
+    <div class="autopagerize_page_element">
+        <div class="content">
 <div class="post animated fadeInDown">
     <div class="post-content">
 
@@ -109,7 +156,7 @@
 <p>My apartment is a three bedroom + hall + kitchen layout flat, with internet and cable drops coming to the central hall&rsquo;s corridor overhead-hatch-panel-thing. My bedroom is adjacent to this panel, with a door in between. The usual connectivity setup in this layout was to have the wifi router mounted in the hall corridor, serving the two adjacent bedrooms, the hall and dining area, and the 3rd bedroom beyond the the hall. This was problematic since basically no wifi access point&rsquo;s range would stretch beyond the end of the hall, stopping short of the 3rd bedroom. The hall and dining area would have great connectivity, but there were dead zones in the two bedrooms the corridor connected to. The far end of my bedroom had pretty weak coverage due to the layout of the walls, and there was a solid one third of the other bedroom that didn&rsquo;t have a stable wifi connection because there were two walls and a bathroom between it and the access point in the hall.
 I used an old wifi router as a repeater placed at the far end of the hall so that the 3rd bedroom had passable connectivity.</p>
 <p>All these years, with only laptops and phones to connect, this setup worked fine. But with a desktop built, and homelabby stuff to be done, I didn&rsquo;t want to rely on wifi. For the first week or two after I assembled my PC, I used a 15 meter CAT6 Ethernet cable running across my room, out the door, connected to the wifi router mounted on the wall, just dangling there. My parents were a bit miffed about this, and I actually did trip over the cable a few times.</p>
-<p>My room had a RJ11 jack intended for an intercom connection, back to the hall junction, but it was on the other side of the room from my desk where the desktop and laptop would be. Interestingly, the RJ11 jack was actually backed by a two pairs of a 4 pair CAT5 cable, so I replaced it with an RJ45 jack and wired up the other end with a ethernet connector to plug in to my switch. Now the 15 meter cable to the desktop no longer had to go out of my bedroom, only across the room along the walls. The in-wall CAT5 cable was never intended for this though, so the even with all four pairs wired up, the link to the hall would drop after a few hours from gigabit to 100mbit, due to the poor quality cable (my bad crimping and jack termination skills probably didn&rsquo;t help matters). There was also a coaxial TV cable from the hall junction to my desk, intended for a satellite TV box. I wasn&rsquo;t too pleased about the few ethernet over coax adapters I tried to find, so I wanted to replace that cable with a proper ethernet cable. It was a tight fit and many electricians over the years had refused to do the job, but after a couple of months we managed to find an electrician willing to put in the extra effort to replace the coax cable with two CAT7 Ethernet cables. CAT7, because &ldquo;futureproofing&rdquo; and &ldquo;why not?&quot;, and two, because I doubted any electrician would want to deal with the tight tubing again if I ever needed another cable put in.</p>
+<p>My room had a RJ11 jack intended for an intercom connection, back to the hall junction, but it was on the other side of the room from my desk where the desktop and laptop would be. Interestingly, the RJ11 jack was actually backed by a two pairs of a 4 pair CAT5 cable, so I replaced it with an RJ45 jack and wired up the other end with a ethernet connector to plug in to my switch. Now the 15 meter cable to the desktop no longer had to go out of my bedroom, only across the room along the walls. The in-wall CAT5 cable was never intended for this though, so the even with all four pairs wired up, the link to the hall would drop after a few hours from gigabit to 100mbit, due to the poor quality cable (my bad crimping and jack termination skills probably didn&rsquo;t help matters). There was also a coaxial TV cable from the hall junction to my desk, intended for a satellite TV box. I wasn&rsquo;t too pleased about the few ethernet over coax adapters I tried to find, so I wanted to replace that cable with a proper ethernet cable. It was a tight fit and many electricians over the years had refused to do the job, but after a couple of months we managed to find an electrician willing to put in the extra effort to replace the coax cable with two CAT7 Ethernet cables. CAT7, because &ldquo;futureproofing&rdquo; and &ldquo;why not?&rdquo;, and two, because I doubted any electrician would want to deal with the tight tubing again if I ever needed another cable put in.</p>
 <p>While this electrician-from-heaven was around, we also decided to pull an Ethernet cable to the hall TV &ldquo;desk&rdquo; so that I could use the wifi router I was  using as a wireless repeater for the out-of-hall-range 3rd bedroom, as a wired access point instead. This would reduce congestion on WiFi and up the speeds my parents would get in that bedroom. This is what one of the TPLink Gigabit Ethernet switches was for - it went in the hall junction and provided ports to connect the TV desk AP with the junction, and the ISP modem, and the devices in my bedroom.</p>
 <p>I also wanted my laptop to be on a wired connection to the network, and it would be a lot more flexible to have it and the desktop connected to a switch on the desk which would be connected to the hall by the in-wall cables. This is where I used the other TPLink switch. I only connected a single cable of the two new cables between the hall switch and my room switch, for now, but the switches supported link-aggregation, so I could do that later if I wanted to. (Narrator: He did.)</p>
 <p>The third betroom also had a similar CAT5 cable running to an RJ11 jack. I later replaced that RJ11 intercom jack with a RJ11 + RJ45 panel, using two pairs for the RJ11 intercom and the other two pairs for 100mbit Ethernet. My parents wouldn&rsquo;t need gigabit connectivity to their room, but they did need the intercom drop, so gigabit couldn&rsquo;t be accomplished over just a single 4 pair wire.</p>
@@ -148,8 +195,7 @@ The port on the room switch where my virtualization system (which will be runnin
     <div class="post-footer">
       <div class="info">
         
-        
-    <span class="separator"><a class="tag" href="/tags/homelab/">homelab</a><a class="tag" href="/tags/networking/">networking</a></span>
+        <span class="separator"><a class="tag" href="/tags/homelab/">homelab</a><a class="tag" href="/tags/networking/">networking</a></span>
 
       </div>
     </div>
@@ -178,20 +224,27 @@ The port on the room switch where my virtualization system (which will be runnin
 </div>
 
 
-                </div>
-            </div>
         </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        src="http://thelastguardian.me/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js"
+        integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw="
+        crossorigin="anonymous"></script>
+
+
+
+
+<script type="text/javascript"
+        src="http://thelastguardian.me/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js"
+        integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript"
+        src="http://thelastguardian.me/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js"
+        integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro="
+        crossorigin="anonymous"></script>
 </body>
-
-
-
-<script type="text/javascript" src="http://thelastguardian.me/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js" integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw=" crossorigin="anonymous"></script>
-
-
-
-
-<script type="text/javascript" src="http://thelastguardian.me/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js" integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4=" crossorigin="anonymous"></script>
-
-<script type="text/javascript" src="http://thelastguardian.me/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js" integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro=" crossorigin="anonymous"></script></html></body>
 
 </html>

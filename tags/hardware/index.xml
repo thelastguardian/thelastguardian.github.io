@@ -6,11 +6,7 @@
     <description>Recent content in hardware on thelastguardian.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Dec 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="http://thelastguardian.me/tags/hardware/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 19 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://thelastguardian.me/tags/hardware/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HomeLab Part 1 - The Fellowship of the PC</title>
       <link>http://thelastguardian.me/posts/2019-12-19-homelab-part-1-the-fellowship-of-the-pc/</link>
