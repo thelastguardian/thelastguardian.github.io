@@ -246,16 +246,18 @@
       <main>
         <div class="autopagerize_page_element">
           <div class="content">
-<div class="post animated fadeInDown">
+  <div
+    class="post 
+      animated fadeInDown
+
+    "
+  >
     <div class="post-content">
-
+      
       <div class="post-title">
-        <h3>HomeLab Networking Part 1 - The VLANS - There and Back Again
-        </h3>
+        <h1>HomeLab Networking Part 1 - The VLANS - There and Back Again</h1>
         
-        </div>
-
-    <h1 id="backstory">Backstory</h1>
+      </div><h1 id="backstory">Backstory</h1>
 <p>My history with ISPs in my home city of Mumbai has been rocky. Way back in 2005 when I moved here, ADSL was mainstream, with the fastest speeds being 256 kilobits/s. After suffering for a year on a <a href="http://www.tataphotons.in/tata-docomo-walky.html">wireless CDMA-1x wireless landline</a> with pay-per-minute internet access, we got a MTNL ADSL connection to our apartment complex. Over the next few years, the blazing fast 256kbits/s dialup line served me well, if a little frustratingly due to the horrible customer service by the government-owner MTNL during the downtimes that were bound to occur over delicate POTS lines. Latencies were of the order of 60ms to the local ISP node, but it was still better than a wireless connection.</p>
 <p>The peace of mind granted by not having to worry about overage charges or even-slower internet after crossing Fair Usage Policies, cannot be understated. At some point, 2megabits/s (yay!) FUP-capped plans (boo!) became available, but I insisted on a slower 512Kbps-in-the-daytime-1Mbps-in-the-evenings-2Mbps-at-night unlimited usage, plan. Many a nights went by scripting ADSL modem restarts and file-download resume managers to take advantage of the timed speeds.</p>
 <p>A few more years passed, and private players started to come into the picture - Hathway Broadband (over DOCSIS) and Airtel Broadband (still over ADSL) became available. 25mbps and 50mbps FUP-capped plans provided by Hathway were still on the expensive side, and I used their 10mbps plan for a couple of years, with the FUP varying from 80GB to 200GB per month. Latency to the local ISP node over the DOCSIS cable connection was around 20-30ms, and it was clear ADSL was on its way out. I still missed uncapped internet, but there was simply no other choice. The fast/cheap-ish unlimited plans by players like Hathway were restricted to cities like Bangalore and Hyderabad, which was confusing to me because I&rsquo;d expected that it would be easier for ISPs to provide cheaper/better service in Mumbai, being an international cable landing port. Download:Upload bandwidth ranged from 10:1 to 5:1.</p>
@@ -300,39 +302,46 @@ The port on the room switch where my virtualization system (which will be runnin
 <hr>
 <p>This can similarly be extended to have any configuration of layer-2 networks spanning across the set of VLAN-aware switches and devices connected to their ports. With Proxmox (in a later blog post), managing VLANs for virtual machines and linux containers you run is a breeze - just configure the virtual NIC for your VM/container with the VLAN ID, and make sure all switch ports between that Proxmox host and any other Proxmox hosts or devices, have that VLAN ID tagged on the switch port.</p>
 <!-- raw HTML omitted -->
-
-    </div>
+</div>
     <div class="post-footer">
       <div class="info">
         
-        <span class="separator"><a class="tag" href="/tags/homelab/">homelab</a><a class="tag" href="/tags/networking/">networking</a></span>
+
+        
+          <span class="separator"><a class="tag" href="/tags/homelab/">homelab</a><a class="tag" href="/tags/networking/">networking</a></span>
 
 
+
+
+        
       </div>
     </div>
+
     
-    <h3>Leave a comment :)</h3>
-    <script>
-      var remark_config = {
-        host: "https://comments.thelastguardian.me",
-        site_id: 'thelastguardianme',
-        url: "https://thelastguardian.me/posts/2019-12-20-homelab-networking-part-1-the-vlans-there-and-back-again/",
-        components: ['embed'],
-        theme: 'dark',
-      };
-    
-      (function(c) {
-        for(var i = 0; i < c.length; i++){
-          var d = document, s = d.createElement('script');
-          s.src = remark_config.host + '/web/' +c[i] +'.js';
-          s.defer = true;
-          (d.head || d.body).appendChild(s);
-        }
-      })(remark_config.components || ['embed']);
-    </script>
-    <div id="remark42"></div>
-    
-</div>
+      <h3>comments</h2>
+      
+<div id="remark42"></div>
+<script>
+  var remark_config = {
+    host: "https://comments.thelastguardian.me",
+    site_id: 'thelastguardianme',
+    url: "https://thelastguardian.me/posts/2019-12-20-homelab-networking-part-1-the-vlans-there-and-back-again/",
+    components: ['embed'],
+    theme: 'dark',
+  };
+
+  (function(c) {
+    for(var i = 0; i < c.length; i++){
+      var d = document, s = d.createElement('script');
+      s.src = remark_config.host + '/web/' +c[i] +'.js';
+      s.defer = true;
+      (d.head || d.body).appendChild(s);
+    }
+  })(remark_config.components || ['embed']);
+</script>
+
+
+  </div>
 
 
           </div>

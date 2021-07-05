@@ -241,25 +241,51 @@
       <main>
         <div class="autopagerize_page_element">
           <div class="content">
-<div class="post animated fadeInDown">
+  <div
+    class="post 
+      animated fadeInDown
+
+    "
+  >
     <div class="post-content">
-
+      
       <div class="post-title">
-        <h3>
-        </h3>
+        <h1></h1>
         
-        </div>
-
-    There is nothing to see here. Or is there?
-    </div>
+      </div>There is nothing to see here. Or is there?</div>
     <div class="post-footer">
       <div class="info">
         
+
         
       </div>
     </div>
+
     
-</div>
+      <h3>comments</h2>
+      
+<div id="remark42"></div>
+<script>
+  var remark_config = {
+    host: "https://comments.thelastguardian.me",
+    site_id: 'thelastguardianme',
+    url: "https://thelastguardian.me/404/",
+    components: ['embed'],
+    theme: 'dark',
+  };
+
+  (function(c) {
+    for(var i = 0; i < c.length; i++){
+      var d = document, s = d.createElement('script');
+      s.src = remark_config.host + '/web/' +c[i] +'.js';
+      s.defer = true;
+      (d.head || d.body).appendChild(s);
+    }
+  })(remark_config.components || ['embed']);
+</script>
+
+
+  </div>
 
 
           </div>

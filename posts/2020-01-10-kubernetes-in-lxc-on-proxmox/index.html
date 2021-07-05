@@ -246,16 +246,18 @@
       <main>
         <div class="autopagerize_page_element">
           <div class="content">
-<div class="post animated fadeInDown">
+  <div
+    class="post 
+      animated fadeInDown
+
+    "
+  >
     <div class="post-content">
-
+      
       <div class="post-title">
-        <h3>Kubernetes in LXC on Proxmox
-        </h3>
+        <h1>Kubernetes in LXC on Proxmox</h1>
         
-        </div>
-
-    <h1 id="backstory">Backstory</h1>
+      </div><h1 id="backstory">Backstory</h1>
 <p>I&rsquo;ve been working with Kubernetes for the past few months at work, to run our webserving and internal applications. We use AWS&rsquo;s Elastic Kubernetes Service (EKS), their managed Kubernetes control plane offering. It&rsquo;s easy to set up and reliable enough to let folks like me new to Kubernetes run production workloads without too much trouble. We don&rsquo;t to worry about managing critical control-plane services, we just have to supply our own worker nodes and our application stack.</p>
 <p>But to really get stuff done on EKS, a deeper understanding of the Kubernetes core is necessary. There are quite a few rough edges and when something goes wrong or you feel like you&rsquo;re missing an obvious feature, you need to know how stuff works under the hood. For the past few months my team has been on that, but I wanted to set up and run my own kubernetes cluster at home to learn more than what I could experiement with on AWS EKS.</p>
 <h1 id="kubernetes-single-node-microk8s">Kubernetes single-node MicroK8s</h1>
@@ -413,39 +415,46 @@ Various references: linkhere</p>
 <pre><code>mkdir /etc/systemd/journald.conf.d/; echo &quot;ReadKMsg=no&quot; &gt; /etc/systemd/journald.conf.d/kfilter.conf
 systemctl restart systemd-journald
 </code></pre><p>This still doesn&rsquo;t stop systemd-journald from occasionally taking up a core with its infinite loop, so there&rsquo;s still something to be investigated here. For now I just kill the process once after bootup if I see this situation (yes, ugly)</p>
-
-    </div>
+</div>
     <div class="post-footer">
       <div class="info">
         
-        <span class="separator"><a class="tag" href="/tags/homelab/">homelab</a><a class="tag" href="/tags/kubernetes/">kubernetes</a><a class="tag" href="/tags/proxmox/">proxmox</a><a class="tag" href="/tags/lxc/">lxc</a><a class="tag" href="/tags/kubeadm/">kubeadm</a></span>
+
+        
+          <span class="separator"><a class="tag" href="/tags/homelab/">homelab</a><a class="tag" href="/tags/kubernetes/">kubernetes</a><a class="tag" href="/tags/proxmox/">proxmox</a><a class="tag" href="/tags/lxc/">lxc</a><a class="tag" href="/tags/kubeadm/">kubeadm</a></span>
 
 
+
+
+        
       </div>
     </div>
+
     
-    <h3>Leave a comment :)</h3>
-    <script>
-      var remark_config = {
-        host: "https://comments.thelastguardian.me",
-        site_id: 'thelastguardianme',
-        url: "https://thelastguardian.me/posts/2020-01-10-kubernetes-in-lxc-on-proxmox/",
-        components: ['embed'],
-        theme: 'dark',
-      };
-    
-      (function(c) {
-        for(var i = 0; i < c.length; i++){
-          var d = document, s = d.createElement('script');
-          s.src = remark_config.host + '/web/' +c[i] +'.js';
-          s.defer = true;
-          (d.head || d.body).appendChild(s);
-        }
-      })(remark_config.components || ['embed']);
-    </script>
-    <div id="remark42"></div>
-    
-</div>
+      <h3>comments</h2>
+      
+<div id="remark42"></div>
+<script>
+  var remark_config = {
+    host: "https://comments.thelastguardian.me",
+    site_id: 'thelastguardianme',
+    url: "https://thelastguardian.me/posts/2020-01-10-kubernetes-in-lxc-on-proxmox/",
+    components: ['embed'],
+    theme: 'dark',
+  };
+
+  (function(c) {
+    for(var i = 0; i < c.length; i++){
+      var d = document, s = d.createElement('script');
+      s.src = remark_config.host + '/web/' +c[i] +'.js';
+      s.defer = true;
+      (d.head || d.body).appendChild(s);
+    }
+  })(remark_config.components || ['embed']);
+</script>
+
+
+  </div>
 
 
           </div>
