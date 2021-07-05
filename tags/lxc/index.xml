@@ -13,7 +13,9 @@
       <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>http://thelastguardian.me/posts/2020-01-10-kubernetes-in-lxc-on-proxmox/</guid>
-      <description>Kubernetes in LXC containers on Proxmox Virtualization Environment</description>
+      
+        <description>Kubernetes in LXC containers on Proxmox Virtualization Environment</description>
+      
     </item>
     
   </channel>

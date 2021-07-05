@@ -13,7 +13,9 @@
       <pubDate>Sun, 31 May 2020 04:33:04 +0530</pubDate>
       
       <guid>http://thelastguardian.me/about/</guid>
-      <description>Site Reliability Engineer. Gamer. PC Enthusiast. Datahoarder.</description>
+      
+        <description>Site Reliability Engineer. Gamer. PC Enthusiast. Datahoarder.</description>
+      
     </item>
     
     <item>
@@ -22,7 +24,9 @@
       <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>http://thelastguardian.me/posts/2020-01-10-kubernetes-in-lxc-on-proxmox/</guid>
-      <description>Kubernetes in LXC containers on Proxmox Virtualization Environment</description>
+      
+        <description>Kubernetes in LXC containers on Proxmox Virtualization Environment</description>
+      
     </item>
     
     <item>
@@ -31,7 +35,9 @@
       <pubDate>Sat, 21 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>http://thelastguardian.me/posts/2019-12-21-homelab-part-2-the-two-computers/</guid>
-      <description>This post focuses primarily on how my setup actually turned into a home &amp;ldquo;lab&amp;rdquo; from two just-standalone systems.</description>
+      
+        <description>This post focuses primarily on how my setup actually turned into a home &amp;ldquo;lab&amp;rdquo; from two just-standalone systems.</description>
+      
     </item>
     
     <item>
@@ -40,7 +46,9 @@
       <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>http://thelastguardian.me/posts/2019-12-20-homelab-networking-part-1-the-vlans-there-and-back-again/</guid>
-      <description>Complex network layout requirements? VLANs to the rescue! This is a side-post about how the network at my home developed over the years and how the homelab setup was laid out network-wise.</description>
+      
+        <description>Complex network layout requirements? VLANs to the rescue! This is a side-post about how the network at my home developed over the years and how the homelab setup was laid out network-wise.</description>
+      
     </item>
     
     <item>
@@ -49,7 +57,9 @@
       <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>http://thelastguardian.me/posts/2019-12-19-homelab-part-1-the-fellowship-of-the-pc/</guid>
-      <description>Homelab?</description>
+      
+        <description>Homelab?</description>
+      
     </item>
     
     <item>
@@ -58,7 +68,9 @@
       <pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>http://thelastguardian.me/posts/2019-12-01-hello-world/</guid>
-      <description>hello world :)</description>
+      
+        <description>hello world :)</description>
+      
     </item>
     
     <item>
@@ -67,7 +79,9 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://thelastguardian.me/404/</guid>
-      <description>There is nothing to see here. Or is there?</description>
+      
+        <description>There is nothing to see here. Or is there?</description>
+      
     </item>
     
   </channel>

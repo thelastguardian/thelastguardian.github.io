@@ -3,7 +3,7 @@
 # consolidated kubernetes install script using docker container runtime and kubeadm, plus my lxc tweaks and tools
 # based on guide starting at https://kubernetes.io/docs/setup/production-environment/container-runtimes/
 # specify kubeadm/kubelet/kubectl version here
-version="1.18.6-00"
+version="1.20.5-00"
 
 
 ############

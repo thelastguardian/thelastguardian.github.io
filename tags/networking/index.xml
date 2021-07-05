@@ -13,7 +13,9 @@
       <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>http://thelastguardian.me/posts/2019-12-20-homelab-networking-part-1-the-vlans-there-and-back-again/</guid>
-      <description>Complex network layout requirements? VLANs to the rescue! This is a side-post about how the network at my home developed over the years and how the homelab setup was laid out network-wise.</description>
+      
+        <description>Complex network layout requirements? VLANs to the rescue! This is a side-post about how the network at my home developed over the years and how the homelab setup was laid out network-wise.</description>
+      
     </item>
     
   </channel>
