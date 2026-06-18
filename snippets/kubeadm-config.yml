@@ -1,0 +1,45 @@
+apiVersion: v1
+data:
+  ClusterConfiguration: |
+    apiServer:
+      extraArgs:
+        authorization-mode: Node,RBAC
+      timeoutForControlPlane: 4m0s
+    apiVersion: kubeadm.k8s.io/v1beta2
+    certificatesDir: /etc/kubernetes/pki
+    clusterName: kubernetes
+    controlPlaneEndpoint: kcontrol.home.thelastguardian.me:6443
+    controllerManager: {}
+    dns:
+      type: CoreDNS
+    etcd:
+      local:
+        dataDir: /var/lib/etcd
+    imageRepository: k8s.gcr.io
+    kind: ClusterConfiguration
+    kubernetesVersion: v1.20.5
+    networking:
+      dnsDomain: cluster.local
+      podSubnet: 10.244.0.0/16
+      serviceSubnet: 10.96.0.0/12
+    scheduler: {}
+  ClusterStatus: |
+    apiEndpoints:
+      k8s-control-1:
+        advertiseAddress: 10.0.0.90
+        bindPort: 6443
+      k8s-control-2:
+        advertiseAddress: 10.0.0.89
+        bindPort: 6443
+      k8s-control-3:
+        advertiseAddress: 10.0.0.88
+        bindPort: 6443
+    apiVersion: kubeadm.k8s.io/v1beta2
+    kind: ClusterStatus
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2020-02-10T13:53:51Z"
+  name: kubeadm-config
+  namespace: kube-system
+  resourceVersion: "214983505"
+  uid: 8e2bf7e7-dbe0-42df-bf56-03266155b93c

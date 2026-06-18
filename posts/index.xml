@@ -1,66 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on thelastguardian.me</title>
-    <link>http://thelastguardian.me/posts/</link>
-    <description>Recent content in Posts on thelastguardian.me</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 10 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="http://thelastguardian.me/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Kubernetes in LXC on Proxmox</title>
-      <link>http://thelastguardian.me/posts/2020-01-10-kubernetes-in-lxc-on-proxmox/</link>
-      <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>http://thelastguardian.me/posts/2020-01-10-kubernetes-in-lxc-on-proxmox/</guid>
-      
-        <description>Kubernetes in LXC containers on Proxmox Virtualization Environment</description>
-      
-    </item>
-    
-    <item>
-      <title>HomeLab Part 2 - The Two Computers</title>
-      <link>http://thelastguardian.me/posts/2019-12-21-homelab-part-2-the-two-computers/</link>
-      <pubDate>Sat, 21 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://thelastguardian.me/posts/2019-12-21-homelab-part-2-the-two-computers/</guid>
-      
-        <description>This post focuses primarily on how my setup actually turned into a home &amp;ldquo;lab&amp;rdquo; from two just-standalone systems.</description>
-      
-    </item>
-    
-    <item>
-      <title>HomeLab Networking Part 1 - The VLANS - There and Back Again</title>
-      <link>http://thelastguardian.me/posts/2019-12-20-homelab-networking-part-1-the-vlans-there-and-back-again/</link>
-      <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://thelastguardian.me/posts/2019-12-20-homelab-networking-part-1-the-vlans-there-and-back-again/</guid>
-      
-        <description>Complex network layout requirements? VLANs to the rescue! This is a side-post about how the network at my home developed over the years and how the homelab setup was laid out network-wise.</description>
-      
-    </item>
-    
-    <item>
-      <title>HomeLab Part 1 - The Fellowship of the PC</title>
-      <link>http://thelastguardian.me/posts/2019-12-19-homelab-part-1-the-fellowship-of-the-pc/</link>
-      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://thelastguardian.me/posts/2019-12-19-homelab-part-1-the-fellowship-of-the-pc/</guid>
-      
-        <description>Homelab?</description>
-      
-    </item>
-    
-    <item>
-      <title>Hello World</title>
-      <link>http://thelastguardian.me/posts/2019-12-01-hello-world/</link>
-      <pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://thelastguardian.me/posts/2019-12-01-hello-world/</guid>
-      
-        <description>hello world :)</description>
-      
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on thelastguardian.me</title><link>https://thelastguardian.me/posts/</link><description>Recent content in Posts on thelastguardian.me</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 16 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://thelastguardian.me/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>I Got an AMD R9700 (32GB) for Local Inference</title><link>https://thelastguardian.me/posts/2026-05-16-an-amd-r9700-for-local-inference/</link><pubDate>Sat, 16 May 2026 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2026-05-16-an-amd-r9700-for-local-inference/</guid><description>&lt;p&gt;If a local model was going to be part of the assistant, I wanted to understand the machine under it. So I bought a AI-oriented GPU.&lt;/p&gt;
+&lt;p&gt;I wanted to learn the internals of LLMs and inference, and I can&amp;rsquo;t afford the multi-million-dollar racks of datacenter GPUs the hyperscalers run. A local model is a temporary stand-in for that learning: not smart enough to replace a frontier model, not some AGI/ASI waking up in my utility room, but decent enough to test chatting flows and scripts and watch how serving behaves.&lt;/p&gt;</description></item><item><title>Teaching an Agent to Click on Wayland</title><link>https://thelastguardian.me/posts/2026-04-26-screen-control-on-wayland/</link><pubDate>Sun, 26 Apr 2026 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2026-04-26-screen-control-on-wayland/</guid><description>&lt;p&gt;Second half of giving the assistant hands: driving the actual screen.&lt;/p&gt;
+&lt;p&gt;In the &lt;a href="https://thelastguardian.me/posts/2026-04-19-teaching-an-agent-to-use-a-browser/"&gt;last post&lt;/a&gt; I got an agent driving a browser - Selenium against a copy of my Firefox profile for anything on my own accounts, Playwright for the clean-room jobs. That didn&amp;rsquo;t cover native desktop apps with no DOM to drive, or the occasional site where only my &lt;em&gt;actual&lt;/em&gt; running browser, with my actual session, would do.&lt;/p&gt;
+&lt;p&gt;Instead of controlling a browser, control the screen: move the real mouse, press real keys, against whatever window is in front of me. If the agent can operate the machine the way I do when I&amp;rsquo;m sitting at it, the browser and the native app stop being two different problems.&lt;/p&gt;
+&lt;p&gt;On GNOME on Wayland, that took a lot longer than I expected.&lt;/p&gt;</description></item><item><title>Teaching an Agent to Use a Browser</title><link>https://thelastguardian.me/posts/2026-04-19-teaching-an-agent-to-use-a-browser/</link><pubDate>Sun, 19 Apr 2026 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2026-04-19-teaching-an-agent-to-use-a-browser/</guid><description>&lt;p&gt;For the assistant to do real chores, it needed hands. This is the first half of giving it some.&lt;/p&gt;
+&lt;p&gt;I have a pile of small browser chores that only I can do because they live behind my own logins: register a warranty on an appliance, check a dashboard that has no API, fill in some form that wants my account. None of it is hard, all of it is tedious. Could I hand that work to one of the coding agents I already run, and have it do the same clicking and typing I&amp;rsquo;d do, on my own accounts, while I was off doing something else?&lt;/p&gt;
+&lt;p&gt;Note: most of this was before Claude Cowork was generally available, and anyway I wanted to build my own generic screen control for experimentation and things that there wouldn&amp;rsquo;t be Cowork connectors for, atleast initially.&lt;/p&gt;
+&lt;p&gt;The catch: an agent that can read and write files and run shell commands still can&amp;rsquo;t see a web page the way I can, and it can&amp;rsquo;t bring my logged-in session. So: how do you let an agent drive a browser at all?&lt;/p&gt;</description></item><item><title>Memory That Outlives the Context Window</title><link>https://thelastguardian.me/posts/2026-04-12-memory-that-outlives-the-context-window/</link><pubDate>Sun, 12 Apr 2026 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2026-04-12-memory-that-outlives-the-context-window/</guid><description>&lt;p&gt;An assistant that forgets everything between chats can&amp;rsquo;t be trusted with anything ongoing.&lt;/p&gt;
+&lt;p&gt;I run a fleet of AI coding agents in my homelab, and for a while they all had the same flaw: every session, they forgot everything. You&amp;rsquo;d tell an agent &amp;ldquo;it&amp;rsquo;s haven, not the NUC, the NUC was retired&amp;rdquo; and it would nod along, fix it, and then three days later a fresh session would confidently SSH into a machine that no longer existed. Context windows are big now, but they&amp;rsquo;re not forever, and the moment a long session compacts or a new one starts, all that context is gone.&lt;/p&gt;</description></item><item><title>A Discord Control Plane for Autonomous Agents</title><link>https://thelastguardian.me/posts/2026-03-29-discord-control-plane-for-ai-agents/</link><pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2026-03-29-discord-control-plane-for-ai-agents/</guid><description>&lt;p&gt;Another piece of the assistant: being able to answer it when I&amp;rsquo;m not at the desk.&lt;/p&gt;
+&lt;p&gt;The agent stack in my homelab runs AI coding sessions unattended. A scheduler pulls recurring tasks from Todoist, launches a session to handle each one, and a control-plane timer health-checks them every couple of minutes. Most of the time I never see any of it. But unattended work still needs a human sometimes: a permission prompt, an ambiguous call, a finding worth a second opinion.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m not sitting at the terminal when an agent hits one of those moments. So I built a session bridge: it relays an agent&amp;rsquo;s session to a Discord thread and relays my replies back. The agent asks, my phone buzzes, I answer from the bus, the agent carries on. One thread per session, so each conversation keeps its context.&lt;/p&gt;
+&lt;p&gt;The relay itself was easy. The hard part was the two failure modes I hit making it trustworthy.&lt;/p&gt;</description></item><item><title>Automating Permissions Safely - Before Claude Auto Mode Was Around</title><link>https://thelastguardian.me/posts/2026-03-18-automating-permissions-before-auto-mode/</link><pubDate>Wed, 18 Mar 2026 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2026-03-18-automating-permissions-before-auto-mode/</guid><description>&lt;p&gt;One piece of the Jarvis I&amp;rsquo;m after is letting it act while I&amp;rsquo;m not watching, which means trusting it with a shell.&lt;/p&gt;
+&lt;p&gt;I run a handful of AI coding agents in my homelab without sitting over them. A scheduler hands them recurring tasks, they work, and most of the time I find out what happened by reading it after the fact. The catch is that a coding agent is only useful if it can actually run things - git, kubectl, the occasional shell one-liner - and &amp;ldquo;can run things, unsupervised&amp;rdquo; is a phrase that should make anyone a little nervous. So the real question was never whether to let the agent act. It was when it should just go ahead, and when it should stop and ask me first. I use agents less for self-contained software coding and more for operating my homelab and agentic workflows on internal and external services, so &amp;ldquo;just run it in a sandbox and allow everything&amp;rdquo; wouldn&amp;rsquo;t work for me.&lt;/p&gt;
+&lt;p&gt;When I started doing this, Claude Code didn&amp;rsquo;t have a built-in answer. Surely someone had made something like this without the often recommended &amp;ldquo;just use &amp;ndash;dangerously-skip-permissions&amp;rdquo; mode? No? Let&amp;rsquo;s use hooks to automate permission decisions with my mental context noted down.&lt;/p&gt;</description></item><item><title>HomeLab 2026 - The Two Datacenters</title><link>https://thelastguardian.me/posts/2026-01-25-homelab-2026-the-two-datacenters/</link><pubDate>Sun, 25 Jan 2026 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2026-01-25-homelab-2026-the-two-datacenters/</guid><description>Six years since the last post. The lab grew up - two sites on two continents, two Kubernetes clusters, GitOps everywhere, NixOS everywhere, and a GPU that talks back. A tour of what runs today and why.</description></item><item><title>VFIO on 2nd-gen Ryzen - passing a GPU, USB and audio into a VM (and the reset bug that broke it)</title><link>https://thelastguardian.me/posts/2020-07-21-vfio-ryzen-2ndgen-usb-flr-reset/</link><pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2020-07-21-vfio-ryzen-2ndgen-usb-flr-reset/</guid><description>Passing the GPU, onboard USB controllers and HD audio from my 2700X / Crosshair VII Hero into a VM. IOMMU groups, the ACS override, and a BIOS-plus-kernel regression that left devices stuck until a host reboot.</description></item><item><title>Compiling a custom kernel on Proxmox</title><link>https://thelastguardian.me/posts/2020-04-21-compiling-a-custom-kernel-on-proxmox/</link><pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2020-04-21-compiling-a-custom-kernel-on-proxmox/</guid><description>Building a patched pve-kernel for my Proxmox box, plus the two dumb traps that cost me an afternoon - a submodule that wouldn&amp;rsquo;t fetch and a version string that kept growing a &amp;ldquo;+&amp;rdquo;.</description></item><item><title>First attempt at Ceph RBD on Kubernetes in LXC containers</title><link>https://thelastguardian.me/posts/2020-04-19-ceph-on-kubernetes/</link><pubDate>Sun, 19 Apr 2020 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2020-04-19-ceph-on-kubernetes/</guid><description>Giving my LXC-based K8s cluster dynamic persistent storage from Ceph RBD, and hitting the fact that you can&amp;rsquo;t load kernel modules inside a container.</description></item><item><title>Kubernetes in LXC on Proxmox</title><link>https://thelastguardian.me/posts/2020-01-10-kubernetes-in-lxc-on-proxmox/</link><pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2020-01-10-kubernetes-in-lxc-on-proxmox/</guid><description>Kubernetes in LXC containers on Proxmox Virtualization Environment</description></item><item><title>HomeLab Part 2 - The Two Computers</title><link>https://thelastguardian.me/posts/2019-12-21-homelab-part-2-the-two-computers/</link><pubDate>Sat, 21 Dec 2019 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2019-12-21-homelab-part-2-the-two-computers/</guid><description>This post focuses primarily on how my setup actually turned into a home &amp;ldquo;lab&amp;rdquo; from two just-standalone systems.</description></item><item><title>HomeLab Networking Part 1 - The VLANS - There and Back Again</title><link>https://thelastguardian.me/posts/2019-12-20-homelab-networking-part-1-the-vlans-there-and-back-again/</link><pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2019-12-20-homelab-networking-part-1-the-vlans-there-and-back-again/</guid><description>Complex network layout requirements? VLANs to the rescue! This is a side-post about how the network at my home developed over the years and how the homelab setup was laid out network-wise.</description></item><item><title>HomeLab Part 1 - The Fellowship of the PC</title><link>https://thelastguardian.me/posts/2019-12-19-homelab-part-1-the-fellowship-of-the-pc/</link><pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2019-12-19-homelab-part-1-the-fellowship-of-the-pc/</guid><description>Homelab?</description></item><item><title>Hello World</title><link>https://thelastguardian.me/posts/2019-12-01-hello-world/</link><pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate><guid>https://thelastguardian.me/posts/2019-12-01-hello-world/</guid><description>&lt;p&gt;hello world :)&lt;/p&gt;</description></item></channel></rss>

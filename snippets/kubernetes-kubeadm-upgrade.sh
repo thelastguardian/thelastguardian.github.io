@@ -1,7 +1,9 @@
 # kubeadm upgrade script
 
+# sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FEEA9169307EA071
+
 # target version:
-version="1.18.6-00"
+version="1.22.1-00"
 
 # kubeadm: unhold, update to target version, rehold
 apt-mark unhold kubeadm && \
@@ -13,7 +15,7 @@ kubeadm version
 # NOTE: manually run only one of the below scenarios
 # for 1st control plane node
 kubeadm upgrade plan
-kubeadm upgrade apply v1.18.6
+kubeadm upgrade apply v1.22.1
 
 # for other control plane and worker plane nodes
 kubeadm upgrade node
@@ -22,3 +24,4 @@ kubeadm upgrade node
 apt-mark unhold kubelet kubectl && \
 apt-get update && apt-get install -y kubelet=$version kubectl=$version && \
 apt-mark hold kubelet kubectl
+
